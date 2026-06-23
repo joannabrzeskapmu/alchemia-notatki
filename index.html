@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#f7f1ea">
-<meta name="description" content="Materiały Alchemia Aesthetic — strategia contentowa i notatki ze szkoleń.">
-<title>Materiały — Alchemia Aesthetic</title>
+<meta name="description" content="Centrum szkoleniowe Alchemia Aesthetic — notatki ze szkoleń i materiały w jednym miejscu.">
+<title>Centrum szkoleniowe — Alchemia Aesthetic</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -35,31 +35,46 @@
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
   ::selection{background:var(--accent);color:#fff;}
 
-  .page{max-width:var(--maxw);margin:0 auto;padding:clamp(70px,12vh,130px) 22px 60px;}
+  .page{max-width:var(--maxw);margin:0 auto;padding:clamp(64px,11vh,120px) 22px 60px;}
 
   .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
   .reveal.in{opacity:1;transform:none;}
   .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}
   .reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
 
-  .hero{text-align:center;padding:10px 16px 40px;}
+  /* hero */
+  .hero{text-align:center;padding:6px 16px 30px;}
   .hero .eyebrow{display:inline-flex;align-items:center;gap:10px;letter-spacing:4px;text-transform:uppercase;
-    font-size:11.5px;font-weight:600;color:var(--accent-deep);margin-bottom:26px;}
+    font-size:11.5px;font-weight:600;color:var(--accent-deep);margin-bottom:24px;}
   .hero .eyebrow::before,.hero .eyebrow::after{content:"";width:26px;height:1px;background:var(--champagne);}
-  .hero h1{font-family:'Fraunces',serif;font-size:clamp(46px,9vw,92px);line-height:.98;font-weight:340;
-    letter-spacing:-1.5px;color:var(--ink);margin-bottom:22px;}
+  .hero h1{font-family:'Fraunces',serif;font-size:clamp(44px,8.5vw,88px);line-height:.98;font-weight:340;
+    letter-spacing:-1.5px;color:var(--ink);margin-bottom:20px;}
   .hero h1 em{font-style:italic;font-weight:430;
     background:linear-gradient(100deg,var(--accent-deep),var(--gold) 55%,var(--rose));
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
   .hero .sub{font-family:'Fraunces',serif;font-style:italic;font-weight:340;color:var(--ink-soft);
     font-size:clamp(17px,2.4vw,22px);line-height:1.5;max-width:560px;margin:0 auto;}
 
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px;}
-  @media(max-width:680px){.cards{grid-template-columns:1fr;}}
+  /* group (dedykowana strefa) */
+  .group{margin-top:clamp(38px,6vw,58px);}
+  .group-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;
+    padding-bottom:18px;margin-bottom:22px;border-bottom:1px solid var(--line);}
+  .group-head .gh-l{display:flex;flex-direction:column;gap:8px;}
+  .group-head .lab{display:inline-flex;align-items:center;gap:9px;letter-spacing:2.5px;text-transform:uppercase;
+    font-size:11px;font-weight:600;color:var(--accent-deep);}
+  .group-head .lab::before{content:"";width:22px;height:1px;background:var(--champagne);}
+  .group-head h2{font-family:'Fraunces',serif;font-weight:380;font-size:clamp(26px,4vw,38px);
+    letter-spacing:-.7px;color:var(--ink);line-height:1.02;}
+  .group-head .count{flex:0 0 auto;font-size:12.5px;color:var(--muted);font-weight:500;
+    background:var(--paper);border:1px solid var(--line);border-radius:100px;padding:7px 15px;white-space:nowrap;
+    box-shadow:var(--shadow-sm);}
+
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:680px){.cards{grid-template-columns:1fr;}.group-head{flex-direction:column;align-items:flex-start;}}
 
   a.card{display:flex;flex-direction:column;text-decoration:none;position:relative;
     background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);
-    padding:clamp(26px,3.5vw,38px);box-shadow:var(--shadow);overflow:hidden;
+    padding:clamp(24px,3.2vw,34px);box-shadow:var(--shadow);overflow:hidden;
     transition:transform .35s var(--ease),box-shadow .35s;}
   a.card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;
     background:linear-gradient(135deg,transparent,rgba(201,168,124,.5));
@@ -67,17 +82,25 @@
     -webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s;}
   a.card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
   a.card:hover::before{opacity:1;}
-  a.card.soon{pointer-events:none;opacity:.62;}
+  a.card.soon{pointer-events:none;opacity:.6;}
+
+  /* episode number badge */
+  .card .epno{position:absolute;top:20px;right:24px;font-family:'Fraunces',serif;font-weight:430;
+    font-size:clamp(30px,5vw,46px);line-height:1;color:var(--accent-soft);letter-spacing:-1px;
+    transition:color .35s;}
+  a.card:hover .epno{color:var(--champagne);}
+
   .card .tag{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:600;}
-  .card h2{font-family:'Fraunces',serif;font-weight:420;font-size:clamp(24px,3.4vw,32px);
-    color:var(--ink);margin:12px 0 10px;letter-spacing:-.5px;line-height:1.08;}
-  .card p{font-size:14px;color:var(--muted);margin:0;line-height:1.55;flex:1;}
-  .card .go{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-weight:600;
+  .card h3{font-family:'Fraunces',serif;font-weight:430;font-size:clamp(21px,3vw,27px);
+    color:var(--ink);margin:10px 0 9px;letter-spacing:-.4px;line-height:1.1;padding-right:54px;}
+  .card p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.55;flex:1;padding-right:8px;}
+  .card .go{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-weight:600;
     font-size:13.5px;color:var(--accent-deep);}
   .card .go .arr{transition:transform .3s var(--ease);}
   a.card:hover .go .arr{transform:translateX(5px);}
+  .card .go.muted{color:var(--muted);}
 
-  footer{text-align:center;padding:54px 20px 14px;}
+  footer{text-align:center;padding:56px 20px 14px;}
   footer .mark{font-family:'Fraunces',serif;font-size:22px;font-weight:480;color:var(--ink);letter-spacing:-.4px;}
   footer .mark i{font-style:normal;color:var(--accent);}
   footer .rule{width:46px;height:1px;background:var(--champagne);margin:18px auto;}
@@ -91,38 +114,69 @@
 <div class="page">
 
   <header class="hero">
-    <div class="eyebrow reveal">Materiały wewnętrzne</div>
+    <div class="eyebrow reveal">Centrum szkoleniowe</div>
     <h1 class="reveal d1">Alchemia <em>Aesthetic</em></h1>
-    <p class="sub reveal d2">Strategia, system contentowy i notatki ze szkoleń — w jednym miejscu.</p>
+    <p class="sub reveal d2">Wszystkie notatki ze szkoleń i materiały — w jednym miejscu, zawsze pod ręką.</p>
   </header>
 
-  <div class="cards">
-    <a class="card reveal d1" href="raport-strategia.html">
-      <span class="tag">Dokument strategiczny</span>
-      <h2>Strategia Contentowa</h2>
-      <p>System tworzenia treści spójnych z marką — nisza, głos marki, idealna klientka, filary contentowe i formaty.</p>
-      <span class="go">Otwórz <span class="arr">→</span></span>
-    </a>
+  <!-- STREFA 1: NOTATKI ZE SZKOLEŃ -->
+  <section class="group">
+    <div class="group-head reveal">
+      <div class="gh-l">
+        <span class="lab">Notatki ze szkoleń</span>
+        <h2>Odcinki szkolenia</h2>
+      </div>
+      <span class="count">1 z 2 gotowych</span>
+    </div>
+    <div class="cards">
+      <a class="card reveal d1" href="szkolenie-cz1.html">
+        <span class="epno">01</span>
+        <span class="tag">Odcinek 1</span>
+        <h3>Claude dla Alchemii</h3>
+        <p>Modele, okno kontekstowe, tryby pracy, baza wiedzy i głos marki — krok po kroku, prostym językiem.</p>
+        <span class="go">Otwórz notatki <span class="arr">→</span></span>
+      </a>
 
-    <a class="card reveal d2" href="szkolenie-cz1.html">
-      <span class="tag">Szkolenie · Część 1</span>
-      <h2>Claude dla Alchemii</h2>
-      <p>Notatki z pierwszej części szkolenia: modele, okno kontekstowe, tryby pracy, baza wiedzy i głos marki — krok po kroku.</p>
-      <span class="go">Otwórz <span class="arr">→</span></span>
-    </a>
+      <a class="card soon reveal d2" href="#">
+        <span class="epno">02</span>
+        <span class="tag">Odcinek 2</span>
+        <h3>Wkrótce</h3>
+        <p>Cowork, Code, budowa strony internetowej i automatyzacje. Notatki pojawią się tu po nagraniu.</p>
+        <span class="go muted">Już niedługo</span>
+      </a>
+    </div>
+  </section>
 
-    <a class="card soon reveal d3" href="#">
-      <span class="tag">Szkolenie · Część 2</span>
-      <h2>Wkrótce</h2>
-      <p>Druga część szkolenia — Cowork, Code, budowa strony i automatyzacje. Notatki pojawią się tu po nagraniu.</p>
-      <span class="go">Już niedługo</span>
-    </a>
-  </div>
+  <!-- STREFA 2: MATERIAŁY I PLIKI -->
+  <section class="group">
+    <div class="group-head reveal">
+      <div class="gh-l">
+        <span class="lab">Materiały i pliki</span>
+        <h2>Stworzone na szkoleniach</h2>
+      </div>
+      <span class="count">1 plik</span>
+    </div>
+    <div class="cards">
+      <a class="card reveal d1" href="raport-strategia.html">
+        <span class="tag">Dokument strategiczny</span>
+        <h3>Strategia Contentowa</h3>
+        <p>Plan contentowy marki — nisza, głos marki, idealna klientka, filary treści i formaty. Powstał na szkoleniu.</p>
+        <span class="go">Otwórz <span class="arr">→</span></span>
+      </a>
+
+      <a class="card soon reveal d2" href="#">
+        <span class="tag">Kolejne materiały</span>
+        <h3>Dochodzą z czasem</h3>
+        <p>Tu będą lądować kolejne pliki tworzone na szkoleniach — głos marki, szablony, plany kampanii.</p>
+        <span class="go muted">W przygotowaniu</span>
+      </a>
+    </div>
+  </section>
 
   <footer class="reveal">
     <div class="mark">Alchemia <i>Aesthetic</i></div>
     <div class="rule"></div>
-    <p>Materiały wewnętrzne · do użytku zespołu</p>
+    <p>Centrum szkoleniowe · materiały wewnętrzne zespołu</p>
   </footer>
 
 </div>
@@ -130,7 +184,7 @@
 <script>
   const io=new IntersectionObserver((entries)=>{
     entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
-  },{threshold:.15,rootMargin:'0px 0px -6% 0px'});
+  },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
 </body>

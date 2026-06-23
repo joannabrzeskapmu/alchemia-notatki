@@ -79,7 +79,9 @@
     max-width:calc(100vw - 24px);
   }
   .nav .brand{font-family:'Fraunces',serif;font-weight:600;font-size:15px;color:var(--ink);
-    letter-spacing:.2px;white-space:nowrap;padding-right:6px;}
+    letter-spacing:.2px;white-space:nowrap;padding-right:6px;text-decoration:none;
+    transition:opacity .2s;}
+  .nav a.brand:hover{opacity:.7;background:none;}
   .nav .brand i{font-style:normal;color:var(--accent);}
   .nav .links{display:flex;gap:2px;}
   .nav a{font-size:12.5px;color:var(--muted);text-decoration:none;padding:7px 12px;border-radius:100px;
@@ -271,7 +273,7 @@
 <div class="progress" id="progress"></div>
 
 <nav class="nav">
-  <span class="brand">Alchemia <i>Aesthetic</i></span>
+  <a class="brand" href="index.html" title="Powrót do centrum szkoleniowego">Alchemia <i>Aesthetic</i></a>
   <span class="links">
     <a href="#s1">Cel</a>
     <a href="#s2">Modele</a>
