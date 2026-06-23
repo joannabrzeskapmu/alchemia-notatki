@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7f1ea">
+<meta name="description" content="Notatki ze szkolenia Claude/AI dla Alchemia Aesthetic — Sesja 1. Modele, tryby, skarbiec wiedzy, repozytorium, skille i agenci, brand voice.">
+<title>Szkolenie Claude — Sesja 1 · Alchemia Aesthetic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f1ea;--bg-2:#efe5da;--paper:#fffdfb;--ink:#2a211c;--ink-soft:#4d4039;--muted:#9a877b;
+    --accent:#b0875f;--accent-deep:#9a6f47;--champagne:#d9c4a8;--accent-soft:#ece0d1;
+    --line:#e8ddd0;--gold:#c9a87c;--rose:#dcb9a6;--green:#5d7a55;--green-bg:#eef3ea;
+    --red:#a8615a;--red-bg:#f8eeec;
+    --shadow-sm:0 2px 8px rgba(58,46,42,.04);
+    --shadow:0 18px 50px -22px rgba(120,82,52,.30);
+    --shadow-lg:0 40px 90px -40px rgba(120,82,52,.45);
+    --r-lg:28px;--r-md:18px;--r-sm:12px;
+    --ease:cubic-bezier(.22,.61,.36,1);--maxw:920px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;scroll-padding-top:92px;-webkit-text-size-adjust:100%;}
+  body{font-family:'Inter',-apple-system,system-ui,sans-serif;background:var(--bg);
+    color:var(--ink-soft);line-height:1.72;font-size:clamp(15px,.4vw + 14px,16.5px);
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative;}
+  body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background:
+      radial-gradient(60% 50% at 80% -5%, rgba(217,196,168,.55), transparent 60%),
+      radial-gradient(55% 45% at 0% 8%, rgba(220,185,166,.35), transparent 60%),
+      radial-gradient(70% 60% at 50% 110%, rgba(176,135,95,.18), transparent 60%),
+      var(--bg);}
+  body::after{content:"";position:fixed;inset:0;z-index:1000;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  ::selection{background:var(--accent);color:#fff;}
+
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:1100;
+    background:linear-gradient(90deg,var(--gold),var(--accent),var(--rose));}
+
+  .nav{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:900;
+    display:flex;align-items:center;gap:6px;padding:7px 8px 7px 18px;border-radius:100px;
+    background:rgba(255,253,251,.72);backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);border:1px solid rgba(255,255,255,.6);
+    box-shadow:0 10px 30px -12px rgba(120,82,52,.35);max-width:calc(100vw - 24px);}
+  .nav .brand{font-family:'Fraunces',serif;font-weight:600;font-size:15px;color:var(--ink);
+    letter-spacing:.2px;white-space:nowrap;padding-right:6px;text-decoration:none;transition:opacity .2s;}
+  .nav a.brand:hover{opacity:.7;background:none;}
+  .nav .brand i{font-style:normal;color:var(--accent);}
+  .nav .links{display:flex;gap:2px;}
+  .nav a{font-size:12.5px;color:var(--muted);text-decoration:none;padding:7px 12px;border-radius:100px;
+    transition:color .25s,background .25s;white-space:nowrap;font-weight:500;}
+  .nav a:hover{color:var(--ink);background:var(--accent-soft);}
+  .nav a.active{color:#fff;background:var(--accent);box-shadow:0 4px 12px -4px rgba(176,135,95,.7);}
+  @media(max-width:880px){.nav .links{display:none;}}
+
+  .page{max-width:var(--maxw);margin:0 auto;padding:120px 22px 60px;}
+
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}
+  .reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
+
+  .hero{position:relative;text-align:center;padding:46px 24px 8px;margin-bottom:30px;}
+  .hero .eyebrow{display:inline-flex;align-items:center;gap:10px;letter-spacing:4px;text-transform:uppercase;
+    font-size:11.5px;font-weight:600;color:var(--accent-deep);margin-bottom:26px;}
+  .hero .eyebrow::before,.hero .eyebrow::after{content:"";width:26px;height:1px;background:var(--champagne);}
+  .hero h1{font-family:'Fraunces',serif;font-size:clamp(46px,8.5vw,96px);line-height:.98;font-weight:340;
+    letter-spacing:-1.5px;color:var(--ink);margin-bottom:22px;}
+  .hero h1 em{font-style:italic;font-weight:430;
+    background:linear-gradient(100deg,var(--accent-deep),var(--gold) 55%,var(--rose));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .hero .sub{font-family:'Fraunces',serif;font-style:italic;font-weight:340;color:var(--ink-soft);
+    font-size:clamp(17px,2.4vw,22px);line-height:1.5;max-width:620px;margin:0 auto 4px;}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;max-width:760px;margin:42px auto 0;
+    background:rgba(255,253,251,.5);border:1px solid var(--line);border-radius:var(--r-md);
+    overflow:hidden;backdrop-filter:blur(6px);box-shadow:var(--shadow-sm);}
+  .stat{padding:22px 14px;text-align:center;border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat .num{font-family:'Fraunces',serif;font-weight:500;color:var(--accent-deep);
+    font-size:clamp(24px,4vw,36px);line-height:1;letter-spacing:-.5px;}
+  .stat .lab{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:9px;}
+  @media(max-width:620px){.stats{grid-template-columns:repeat(2,1fr);}
+    .stat:nth-child(2){border-right:none;}
+    .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--line);}}
+
+  section{position:relative;background:var(--paper);border-radius:var(--r-lg);
+    padding:clamp(30px,4.5vw,56px);margin-bottom:26px;border:1px solid var(--line);box-shadow:var(--shadow);}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:26px;}
+  .sec-num{font-family:'Fraunces',serif;font-weight:500;font-size:15px;color:var(--accent);flex:0 0 auto;
+    display:flex;align-items:center;gap:9px;letter-spacing:1px;}
+  .sec-num::before{content:"";width:30px;height:1px;background:var(--champagne);}
+  h2{font-family:'Fraunces',serif;font-size:clamp(27px,4vw,40px);font-weight:380;
+    letter-spacing:-.8px;color:var(--ink);line-height:1.04;}
+  h3{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+    color:var(--accent);margin:30px 0 14px;}
+  h3:first-of-type{margin-top:8px;}
+  p{margin-bottom:14px;}
+  p:last-child{margin-bottom:0;}
+  b,strong{color:var(--ink);font-weight:600;}
+  .lead{font-size:clamp(16px,2vw,18.5px);color:var(--ink-soft);font-weight:300;line-height:1.6;}
+
+  .quote{position:relative;background:linear-gradient(135deg,#faf4ec,#f4e9dc);
+    padding:26px 30px 26px 34px;border-radius:var(--r-sm);font-family:'Fraunces',serif;font-style:italic;
+    font-weight:340;font-size:clamp(17px,2.2vw,20px);line-height:1.5;color:var(--ink);margin:22px 0;
+    border:1px solid var(--line);}
+  .quote::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:3px;
+    background:linear-gradient(var(--gold),var(--rose));}
+  .quote.small{font-size:clamp(15px,1.8vw,17px);padding:20px 24px 20px 28px;}
+
+  ul{list-style:none;margin:6px 0;display:grid;gap:4px;}
+  ul li{padding:7px 0 7px 30px;position:relative;}
+  ul li::before{content:"";position:absolute;left:4px;top:15px;width:7px;height:7px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--rose));}
+  ul li b{color:var(--ink);}
+
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px;}
+  .chip{background:linear-gradient(180deg,#fff,var(--accent-soft));color:var(--ink-soft);
+    padding:8px 16px;border-radius:100px;font-size:13px;font-weight:500;border:1px solid var(--line);
+    box-shadow:var(--shadow-sm);transition:transform .25s var(--ease),box-shadow .25s,color .25s;}
+  .chip:hover{transform:translateY(-2px);box-shadow:0 8px 18px -8px rgba(120,82,52,.4);color:var(--ink);}
+
+  .voice{margin-top:6px;display:grid;gap:10px;}
+  .vhead{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .vhead span{padding:13px 18px;border-radius:var(--r-sm);font-weight:600;font-size:13px;
+    letter-spacing:.4px;display:flex;align-items:center;gap:9px;}
+  .vhead .yes{background:var(--green-bg);color:var(--green);}
+  .vhead .no{background:var(--red-bg);color:var(--red);}
+  .badge{display:inline-flex;width:19px;height:19px;border-radius:50%;align-items:center;
+    justify-content:center;font-size:11px;flex:0 0 19px;color:#fff;}
+  .vpair{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .vpair div{padding:14px 18px;font-size:14px;line-height:1.45;border-radius:var(--r-sm);border:1px solid var(--line);}
+  .vpair .yes{background:#f6f9f3;color:var(--ink-soft);}
+  .vpair .no{background:#fbf1ef;color:var(--muted);}
+  @media(max-width:560px){.vhead{display:none;}.vpair{grid-template-columns:1fr;gap:8px;}
+    .vpair .yes::before{content:"✓  ";color:var(--green);font-weight:700;}
+    .vpair .no::before{content:"✕  ";color:var(--red);font-weight:700;}}
+
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px;}
+  @media(max-width:560px){.duo{grid-template-columns:1fr;}}
+
+  .formats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px;}
+  .fcard{position:relative;background:linear-gradient(165deg,#fffdfb,#f8efe4);border-radius:var(--r-md);
+    padding:22px;border:1px solid var(--line);overflow:hidden;
+    transition:transform .35s var(--ease),box-shadow .35s,border-color .35s;}
+  .fcard::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;
+    background:linear-gradient(135deg,transparent,rgba(201,168,124,.5));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s;}
+  .fcard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);}
+  .fcard:hover::before{opacity:1;}
+  .fcard .tag{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:600;}
+  .fcard b{display:block;font-family:'Fraunces',serif;font-weight:480;font-size:18px;color:var(--ink);
+    margin:8px 0 8px;letter-spacing:-.3px;}
+  .fcard p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.55;}
+  @media(max-width:760px){.formats{grid-template-columns:1fr 1fr;}}
+  @media(max-width:480px){.formats{grid-template-columns:1fr;}}
+
+  .rhythm{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px;}
+  .rcard{background:#faf4ec;border:1px solid var(--line);border-radius:var(--r-md);padding:20px 22px;}
+  .rcard .big{font-family:'Fraunces',serif;font-size:26px;font-weight:480;color:var(--accent-deep);
+    letter-spacing:-.5px;}
+  .rcard .lab{font-size:13.5px;color:var(--muted);margin-top:4px;line-height:1.45;}
+  .rcard .lab b{color:var(--ink-soft);}
+  @media(max-width:620px){.rhythm{grid-template-columns:1fr;}}
+
+  .note{display:flex;gap:16px;align-items:flex-start;margin:22px 0;padding:20px 24px;
+    background:var(--green-bg);border:1px solid #d8e4d2;border-radius:var(--r-sm);}
+  .note.gold{background:#faf4ec;border-color:var(--line);}
+  .note .ic{flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;}
+  .note.gold .ic{background:linear-gradient(135deg,var(--gold),var(--rose));}
+  .note .tx{font-size:14.5px;line-height:1.55;}
+  .note .tx b{color:var(--green);}
+  .note.gold .tx b{color:var(--accent-deep);}
+
+  .callback{display:flex;align-items:center;gap:14px;margin-top:18px;padding:16px 20px;text-decoration:none;
+    background:linear-gradient(135deg,#faf4ec,#f4e9dc);border:1px solid var(--line);border-radius:var(--r-sm);
+    transition:transform .3s var(--ease),box-shadow .3s;}
+  .callback:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+  .callback .ar{font-size:20px;color:var(--accent);}
+  .callback span{font-size:14px;color:var(--ink-soft);}
+  .callback b{color:var(--ink);}
+
+  footer{text-align:center;padding:54px 20px 14px;}
+  footer .mark{font-family:'Fraunces',serif;font-size:24px;font-weight:480;color:var(--ink);letter-spacing:-.4px;}
+  footer .mark i{font-style:normal;color:var(--accent);}
+  footer .rule{width:46px;height:1px;background:var(--champagne);margin:18px auto;}
+  footer p{color:var(--muted);font-size:12.5px;letter-spacing:.4px;margin:4px 0;}
+  footer a{color:var(--accent-deep);text-decoration:none;border-bottom:1px solid var(--champagne);}
+
+  @media(max-width:520px){.nav .brand{font-size:14px;}}
+  @media print{body{background:#fff;}body::before,body::after,.nav,.progress{display:none;}
+    .page{padding:0;}section,.fcard{box-shadow:none;break-inside:avoid;}.reveal{opacity:1;transform:none;}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}
+    .reveal{opacity:1;transform:none;}html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<nav class="nav">
+  <a class="brand" href="index.html" title="Powrót do centrum szkoleniowego">Alchemia <i>Aesthetic</i></a>
+  <span class="links">
+    <a href="#s1">Cel</a>
+    <a href="#s2">Modele</a>
+    <a href="#s4">Tryby</a>
+    <a href="#s5">Skarbiec</a>
+    <a href="#s8">Skille</a>
+    <a href="#s9">Brand Voice</a>
+    <a href="#s10">Prompty</a>
+    <a href="#s13">Plan</a>
+  </span>
+</nav>
+
+<div class="page">
+
+  <header class="hero">
+    <div class="eyebrow reveal">Notatki ze szkoleń · Sesja 1</div>
+    <h1 class="reveal d1">Claude dla <em>Alchemii</em></h1>
+    <p class="sub reveal d2">Pełne notatki z pierwszej sesji szkolenia (oba nagrania w jednym) — od podstaw Claude po skille i agentów. Prostym językiem, żebyś mogła wrócić i działać sama.</p>
+
+    <div class="stats reveal d3">
+      <div class="stat"><div class="num">1 / 5</div><div class="lab">sesja szkolenia</div></div>
+      <div class="stat"><div class="num">~90</div><div class="lab">minut nagrań</div></div>
+      <div class="stat"><div class="num" data-count="3">3</div><div class="lab">tryby pracy</div></div>
+      <div class="stat"><div class="num" data-count="12">12</div><div class="lab">pojęć w słowniczku</div></div>
+    </div>
+  </header>
+
+  <section id="s1">
+    <div class="sec-head reveal"><span class="sec-num">01</span><h2>O co w tej sesji chodzi</h2></div>
+    <p class="lead reveal">Celem jest nauczyć Cię pracy z <b>Claude</b> tak, żeby realnie pomagał Ci w gabinecie — przede wszystkim przy tworzeniu treści, a docelowo w całym marketingu i porządkowaniu wiedzy firmy.</p>
+    <div class="reveal">
+      <h3>W pigułce — cała Sesja 1</h3>
+      <ul>
+        <li><b>Claude</b> lepiej radzi sobie z długą, złożoną pracą niż ChatGPT — bo ma większe „okno kontekstowe".</li>
+        <li>Budujemy <b>„skarbiec" wiedzy firmy</b> na GitHubie (repozytorium) oraz <b>głos marki</b>.</li>
+        <li>Uczysz Claude powtarzalnych <b>umiejętności (skilli)</b> i składasz je w <b>agentów</b>.</li>
+        <li>Złota zasada: dajesz Claude <b>cel</b>, a nie sztywne zadanie — wtedy sam szuka najlepszej drogi.</li>
+      </ul>
+      <h3>Dwie rzeczy, których uczy ta sesja</h3>
+      <div class="duo">
+        <div class="fcard"><span class="tag">Rzecz 1</span><b>Praca z kontekstem</b><p>Jak dawać Claude'owi dużo informacji o firmie, które zapamięta — bez utraty jakości pracy.</p></div>
+        <div class="fcard"><span class="tag">Rzecz 2</span><b>Baza wiedzy firmy</b><p>Jak zbudować wydzieloną „pamięć" dla Claude — skarbiec z całą wiedzą o Alchemii.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="s2">
+    <div class="sec-head reveal"><span class="sec-num">02</span><h2>Modele: Sonnet vs Opus</h2></div>
+    <p class="lead reveal">Claude ma kilka <b>modeli</b> (zmieniasz je w <b>prawym dolnym rogu</b>). Różnią się mocą i kosztem — do różnych zadań wybiera się różne.</p>
+    <div class="quote reveal small">Claude działa na <b>tokenach</b> (czyli „żetonach"). Każde pytanie i zadanie je „przepala". Im mocniejszy model, tym więcej zużywa — więc do prostych rzeczy szkoda mocniejszego.</div>
+    <div class="reveal">
+      <h3>Który model do czego</h3>
+      <div class="duo">
+        <div class="fcard"><span class="tag">Domyślny · tańszy</span><b>Sonnet 4.6</b><p>Uniwersalny, do większości rzeczy. Proste pytania i codzienne zadania — radzi sobie świetnie, zużywa mniej tokenów.</p></div>
+        <div class="fcard"><span class="tag">Mocniejszy · „mądrzejszy"</span><b>Opus</b><p>Do złożonych i kreatywnych zadań: strona internetowa, kodowanie, koncepcje kampanii, analiza. Skuteczniejszy, ale droższy.</p></div>
+      </div>
+      <div class="note gold"><div class="ic">★</div><div class="tx"><b>Prosta zasada:</b> proste zadanie → <b>Sonnet</b>. Coś złożonego, kreatywnego lub analiza/strategia → <b>Opus</b>.</div></div>
+    </div>
+  </section>
+
+  <section id="s3">
+    <div class="sec-head reveal"><span class="sec-num">03</span><h2>Okno kontekstowe</h2></div>
+    <p class="lead reveal">Największa przewaga Claude. <b>Kontekst</b> to wszystko, co AI „wie" o sprawie, nad którą pracujecie. Bez kontekstu odpowiada przypadkowo.</p>
+    <div class="quote reveal">Jeśli zadasz AI pytanie wyrwane z kontekstu, to ono i tak odpowie — tylko totalnie losowo, „tak jak zawieje wiatr".</div>
+    <div class="reveal">
+      <h3>Dlaczego to ma znaczenie</h3>
+      <div class="voice">
+        <div class="vhead">
+          <span class="yes"><span class="badge" style="background:var(--green);">✓</span> Claude</span>
+          <span class="no"><span class="badge" style="background:var(--red);">✕</span> ChatGPT</span>
+        </div>
+        <div class="vpair"><div class="yes">Ma <b>gigantyczne okno kontekstowe</b> — pamięta dużo na raz</div><div class="no">Przy długiej pracy szybko <b>gubi kontekst</b></div></div>
+        <div class="vpair"><div class="yes">Utrzymuje jakość w <b>długich procesach</b> (tygodnie, miesiące)</div><div class="no">Gubi wątek z poprzednich rozmów po jakimś czasie</div></div>
+        <div class="vpair"><div class="yes">Dlatego stał się <b>popularny w biznesie</b></div><div class="no">To była bolączka, która długo utrudniała AI „na poważnie"</div></div>
+      </div>
+      <p style="margin-top:16px;">Zużycie okna kontekstowego widać w <b>kółku w prawym dolnym rogu</b>. Gdy się zapełni, Claude sam kompresuje rozmowę — wracamy do tego w sekcji <a href="#s11" style="color:var(--accent-deep);">Sesje, tokeny i limity</a>.</p>
+    </div>
+  </section>
+
+  <section id="s4">
+    <div class="sec-head reveal"><span class="sec-num">04</span><h2>Trzy tryby pracy</h2></div>
+    <p class="lead reveal">W <b>lewym górnym rogu</b> Claude masz trzy tryby. Przełączasz je zależnie od tego, co chcesz robić.</p>
+    <div class="formats reveal">
+      <div class="fcard"><span class="tag">Tryb 1</span><b>Chat</b><p>Jak ChatGPT — rozmawiasz, on wyszukuje i odpowiada. Dobry, ale <b>bez automatyzacji</b> i bez łączenia z narzędziami.</p></div>
+      <div class="fcard"><span class="tag">Tryb 2</span><b>Cowork</b><p>„Wpuszczasz" Claude na swój komputer. Może np. <b>uporządkować Google Drive</b> albo przekopać skrzynkę mailową.</p></div>
+      <div class="fcard"><span class="tag">Tryb 3 · max potencjał</span><b>Claude Code</b><p>Największe możliwości. Mimo nazwy <b>nie tylko do kodowania</b> — to tu budujemy repozytorium i pracujemy z plikami firmy.</p></div>
+    </div>
+    <div class="reveal">
+      <div class="note"><div class="ic">✓</div><div class="tx"><b>Bez obaw o maile:</b> <b>archiwizacja nie usuwa</b> wiadomości na stałe — zostają w historii. Możesz spokojnie kazać Claude przekopać skrzynkę i wyłuskać ważne rzeczy (np. starą umowę) na GitHub.</div></div>
+      <p><b>Kiedy Cowork:</b> gdy automatyzacja jest zablokowana — niektóre strony blokują roboty AI. Wtedy Claude używa <b>Twojej przeglądarki i profilu</b>, żeby zrobić rzecz „ręcznie" za Ciebie.</p>
+    </div>
+  </section>
+
+  <section id="s5">
+    <div class="sec-head reveal"><span class="sec-num">05</span><h2>Baza wiedzy — Wasz „skarbiec"</h2></div>
+    <p class="lead reveal">Budujemy dla Claude wydzieloną <b>pamięć firmy</b> — coś jak zewnętrzny dysk z wszystkim, co może się przydać. Mieszka na <b>GitHubie</b>.</p>
+    <div class="reveal">
+      <h3>Co warto tam trzymać</h3>
+      <div class="chips">
+        <span class="chip">opis marki / głos marki</span>
+        <span class="chip">wszystkie posty z Instagrama</span>
+        <span class="chip">opisy realizacji</span>
+        <span class="chip">zdjęcia z gabinetu</span>
+        <span class="chip">powtarzające się pytania klientek</span>
+        <span class="chip">cyferki / wyniki kampanii</span>
+      </div>
+      <p style="margin-top:18px;">Dzięki temu, gdy poprosisz Claude o post, on <b>doskonale wie, kim jesteście</b>: jakie macie usługi, historię z klientkami i jakie posty robiłyście wcześniej. Pisze „Waszym głosem", a nie losowo.</p>
+      <div class="note"><div class="ic">✓</div><div class="tx"><b>Ćwiczenie do zrobienia:</b> agent, który <b>przemieli cały Instagram</b> — wyciągnie wszystkie posty i je przeanalizuje. Potem drugi agent (do contentu) korzysta z tej wiedzy. <i>(Na sesji próbowaliśmy — Instagram blokuje roboty; szczegóły w sekcji Plan.)</i></div></div>
+      <h3>Konto GitHub</h3>
+      <ul>
+        <li>Na sesji założyłyśmy konto GitHub <b>dla Alchemii</b>.</li>
+        <li>Logowanie <b>przez Google</b> — wtedy wszystko jest zintegrowane.</li>
+        <li>To Wasz <b>skarbiec informacji</b>, do którego sięga Claude.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="s6">
+    <div class="sec-head reveal"><span class="sec-num">06</span><h2>Repozytorium i Git</h2></div>
+    <p class="lead reveal"><b>Repozytorium</b> to po prostu <b>folder na GitHubie</b> — Wasz skarbiec. Trzyma głos marki, pliki strony i inne użytkowe pliki.</p>
+    <div class="quote reveal">Wyciągamy ze skarbca informacje, robimy z nich rzeczy, a gotowe — odkładamy z powrotem na półkę.</div>
+    <div class="reveal">
+      <h3>Jak to działa</h3>
+      <ul>
+        <li>Claude <b>pobiera pliki</b> z GitHuba na komputer → pracuje lokalnie → na koniec sesji <b>„pushuje" zmiany</b> z powrotem na GitHub (chmura).</li>
+        <li>Nieważne, z którego komputera pracujesz — wszystko ląduje w jednym repozytorium. (Możesz pracować raz na Macu, raz na drugim kompie.)</li>
+        <li>Może też <b>tworzyć nowe pliki</b> albo aktualizować istniejące, gdy pojawi się nowy pomysł.</li>
+      </ul>
+      <h3>Czym jest Git</h3>
+      <p><b>Git</b> to <b>łącznik (bramka)</b> między Twoim komputerem a GitHubem. Claude wysyła plik do gita, a git wysyła go na GitHub. To programistyczna naleciałość — nie musisz rozumieć szczegółów.</p>
+      <div class="note gold"><div class="ic">⚙</div><div class="tx"><b>Instalacja raz na komputer:</b> Git instaluje się raz na każdej maszynie, na której będziesz pracować (Mac + drugi komputer). Potem już działa.</div></div>
+    </div>
+  </section>
+
+  <section id="s7">
+    <div class="sec-head reveal"><span class="sec-num">07</span><h2>Złota zasada: cel, nie zadanie</h2></div>
+    <div class="quote reveal">Zawsze określaj Claude'owi <b>cel</b>, a nie sztywne zadanie.</div>
+    <div class="reveal">
+      <p>Jak wstukasz mu „zrób X, Y, Z" — zrobi dokładnie X, Y, Z. Ale jak dasz mu <b>cel</b>, to będzie do niego <b>dążył i szukał kreatywnych rozwiązań</b>. To jedna z największych przewag Claude nad innymi AI.</p>
+      <div class="duo">
+        <div class="fcard"><span class="tag">Zamiast</span><b>Zadanie</b><p>„Stwórz plik X, dodaj sekcję Y, zmień Z." → dostajesz dokładnie to, ni mniej, ni więcej.</p></div>
+        <div class="fcard"><span class="tag">Lepiej</span><b>Cel</b><p>„Celem jest zbudowanie skarbca wiedzy firmowej, który posłuży do tworzenia skilli i agentów do contentu." → sam dobiera drogę.</p></div>
+      </div>
+      <div class="note gold"><div class="ic">★</div><div class="tx"><b>Bonus:</b> pytaj go też o zdanie — „co jeszcze byłoby potrzebne?". Naprawdę dobrze doradza i często wyłapie coś, o czym nie pomyślałaś.</div></div>
+    </div>
+  </section>
+
+  <section id="s8">
+    <div class="sec-head reveal"><span class="sec-num">08</span><h2>Skille i agenci</h2></div>
+    <p class="lead reveal">To serce całej maszynki do contentu. Najpierw uczysz Claude pojedynczych <b>umiejętności</b>, a potem składasz je w <b>agenta</b>, który robi wszystko po kolei.</p>
+    <div class="reveal">
+      <div class="duo">
+        <div class="fcard"><span class="tag">Skill</span><b>Umiejętność</b><p>Uczysz Claude jednej rzeczy i zapisujesz jako skill (przez ukośnik <b>/</b>). Po udanej sesji powiedz „stwórz z tego skill" — zapamięta cały kontekst i zrobi z tego powtarzalny proces.</p></div>
+        <div class="fcard"><span class="tag">Agent</span><b>Zestaw skilli</b><p>Zaprogramowany ciąg skilli działających po kolei. Skill = jedno zadanie; agent = sekwencja prowadząca do rezultatu. Twoja „prawa ręka".</p></div>
+      </div>
+      <h3>Przykład: agent do contentu (4 skille)</h3>
+      <ul>
+        <li><b>Skill 1 — Sezonowość:</b> analizuje popyt na usługi w skali miesiąca i priorytetyzuje, o których usługach robić content.</li>
+        <li><b>Skill 2 — Usługi:</b> wyciąga z GitHuba, czym się charakteryzują te usługi i jak o nich mówicie, i podsumowuje.</li>
+        <li><b>Skill 3 — Roadmapa:</b> łączy 1 + 2 i tworzy <b>plan contentu na tydzień</b> (gotowe pomysły na rolki, posty).</li>
+        <li><b>Skill 4 — Pisanie:</b> wie o czym, jak i w jakim stylu piszecie — i <b>pisze gotowy content</b>.</li>
+      </ul>
+      <div class="note"><div class="ic">▶</div><div class="tx">Te 4 skille spięte razem to <b>agent</b> (np. „content geniusz"). Wchodzisz w czat, wywołujesz agenta, klikasz OK — i on po kolei robi wszystko sam.</div></div>
+    </div>
+  </section>
+
+  <section id="s9">
+    <div class="sec-head reveal"><span class="sec-num">09</span><h2>Brand Voice — głos marki</h2></div>
+    <p class="lead reveal">Dokument, który opisuje markę tak, żeby agent <b>rozumiał ją głęboko</b> i pisał jak Alchemia, a nie jak przypadkowa reklama.</p>
+    <div class="reveal">
+      <h3>Co zawiera</h3>
+      <div class="chips">
+        <span class="chip">czym jest marka</span>
+        <span class="chip">jakie macie usługi</span>
+        <span class="chip">czym się wyróżniacie</span>
+        <span class="chip">problemy klientek</span>
+        <span class="chip">czym „fleksujecie"</span>
+        <span class="chip">język i ton</span>
+      </div>
+      <h3>Kierunek głosu (z sesji)</h3>
+      <div class="chips">
+        <span class="chip">ciepły</span>
+        <span class="chip">babski</span>
+        <span class="chip">rola ekspertki</span>
+      </div>
+      <h3>Jak go zbudujemy</h3>
+      <ul>
+        <li>Najłatwiej — przez <b>przemielenie całego Instagrama</b> (te same posty, co do skarbca).</li>
+        <li>Masz już <b>opis marki zrobiony z Chatem</b> (Messenger) — wrzucimy go i każemy Claude przeanalizować go pod kątem języka.</li>
+        <li>Claude zrobi <b>wersję 1 dokumentu marki</b> na GitHubie — to żywy plik, aktualizujesz go na bieżąco.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="s10">
+    <div class="sec-head reveal"><span class="sec-num">10</span><h2>Dwa złote prompty</h2></div>
+    <p class="lead reveal">Sztuczka, jak zmusić Claude, żeby działał jak <b>światowej klasy ekspert</b>. Najpierw określ rolę („jesteś ekspertem od marketingu"), a potem dodaj te dwa prompty.</p>
+    <div class="reveal">
+      <div class="duo">
+        <div class="fcard"><span class="tag">Prompt 1 · aktualność</span><b>Bieżące trendy</b><p>„Skup się, żeby to było zgodne z <b>najbardziej bieżącymi trendami</b> w mojej branży." → wymusza research zamiast wiedzy sprzed lat (np. artykułu z 2020).</p></div>
+        <div class="fcard"><span class="tag">Prompt 2 · jakość</span><b>Auto-audyt</b><p>„Jak skończysz, zrób sam audyt i poprawiaj, aż ocenisz to na <b>99/100</b> jako światowej klasy ekspert." → sam się krytykuje i poprawia niedociągnięcia.</p></div>
+      </div>
+      <a class="callback" href="raport-strategia.html">
+        <span class="ar">✶</span>
+        <span><b>Tak właśnie powstał raport „Strategia Contentowa".</b> Claude sprawdził trendy, zrobił 4× auto-audyt i wygenerował stylowany raport HTML. Zobacz efekt →</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="s11">
+    <div class="sec-head reveal"><span class="sec-num">11</span><h2>Sesje, tokeny i limity</h2></div>
+    <p class="lead reveal">Kilka praktycznych rzeczy o codziennej pracy z Claude, żeby nic Cię nie zaskoczyło.</p>
+    <div class="reveal">
+      <ul>
+        <li><b>Okno kontekstowe</b> (kółko w prawym dolnym rogu) pokazuje, ile Claude pamięta w danej rozmowie. Gdy się zapełni — <b>kompresuje rozmowę w plik-podsumowanie</b> i pracujecie dalej.</li>
+        <li><b>Sesja w Claude Code:</b> na starcie wskazujesz <b>folder</b>, w którym mają się zapisywać pliki z tej sesji.</li>
+        <li><b>Auto mode</b> (opcja „accept edits" na dole) — żeby Claude <b>nie pytał o każdy drobiazg</b>. Wygodne przy rutynowych krokach.</li>
+        <li><b>Limity zużycia:</b> są dwa — <b>5-godzinny</b> i <b>tygodniowy</b>. Procent zużycia widać w ustawieniach. Plan <b>Pro to ok. 22 USD/mies.</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="s12">
+    <div class="sec-head reveal"><span class="sec-num">12</span><h2>Dane i bezpieczeństwo</h2></div>
+    <div class="quote reveal">W biznesie i marketingu dane to <b>płynne złoto</b>. Nic cenniejszego — pozwalają podejmować lepsze decyzje.</div>
+    <div class="reveal">
+      <h3>Dlaczego warto zbierać informacje</h3>
+      <ul>
+        <li><b>Powtarzające się pytania i problemy klientek</b> to gotowy materiał na komunikaty marketingowe.</li>
+        <li>Warto <b>mapować obiekcje</b> i powody przekładania wizyt — z tego często wychodzi temat na content.</li>
+        <li>Gdy ruszą <b>kampanie</b>, „cyferki" stają się najważniejsze — trzeba je gdzieś składować i analizować.</li>
+      </ul>
+      <h3>Prywatność i automatyzacje (MCP)</h3>
+      <p>Rozmowy z klientkami trzymamy <b>z głową, na bezpiecznym GitHubie</b> (serwery Microsoftu) — chodzi o <b>powtarzalne wzorce</b>, nie o samą treść. Claude ma też łączniki do narzędzi, tzw. <b>MCP</b> (np. Gmail) — po połączeniu potrafi przemielać maile i wyciągać to, co istotne. SMS-y z iPhone'a prawdopodobnie też się da, ale to nie priorytet.</p>
+    </div>
+  </section>
+
+  <section id="s13">
+    <div class="sec-head reveal"><span class="sec-num">13</span><h2>Decyzje i plan działania</h2></div>
+    <div class="reveal">
+      <h3>Decyzje podjęte na sesji</h3>
+      <ul>
+        <li>Konto <b>GitHub dla Alchemii</b> (logowanie przez Google) — założone.</li>
+        <li>Content na <b>własnych zdjęciach z gabinetu</b>, nie na grafikach AI.</li>
+        <li>Najpierw <b>konfiguracja</b> (skarbiec + głos marki), potem generowanie treści.</li>
+        <li>Do analizy i strategii przełączamy się na <b>Opus</b>; w pracy wygodny <b>auto mode</b>.</li>
+      </ul>
+      <h3>Otwarte wątki / do sprawdzenia</h3>
+      <ul>
+        <li><b>Eksport postów z Instagrama:</b> IG blokuje roboty, a konto było tylko na telefonie. Ścieżka eksportu: Profil → Ustawienia i aktywność → Centrum kont → Twoje informacje i uprawnienia → <b>Pobierz swoje informacje</b>. Awaryjnie: skopiować 5–10 postów jako próbkę.</li>
+        <li>Odnaleźć i wrzucić <b>opis marki z Chata</b> (Messenger).</li>
+        <li><b>Zainstalować Git</b> na pozostałych komputerach (Mac + drugi) — raz na każdym.</li>
+      </ul>
+      <h3>Następne kroki</h3>
+      <div class="rhythm">
+        <div class="rcard"><div class="big">01</div><div class="lab"><b>Język marki:</b> przemielić (na Opusie) materiały, które wysłałaś, i wyciągnąć głos — ciepły, babski, rola ekspertki.</div></div>
+        <div class="rcard"><div class="big">02</div><div class="lab"><b>Dokument marki v1:</b> Claude tworzy pliki na GitHubie; skill do contentu zawsze będzie je wywoływał.</div></div>
+        <div class="rcard"><div class="big">03</div><div class="lab"><b>Strategia contentowa:</b> Claude proponuje wg bieżących trendów (dwa złote prompty).</div></div>
+        <div class="rcard"><div class="big">04</div><div class="lab"><b>Szablony formatów:</b> Claude proponuje na bazie strategii.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="s14">
+    <div class="sec-head reveal"><span class="sec-num">14</span><h2>Słowniczek pojęć</h2></div>
+    <p class="lead reveal">Krótkie wyjaśnienia pojęć z sesji — żeby nic nie było „czarną magią".</p>
+    <div class="formats reveal">
+      <div class="fcard"><span class="tag">pojęcie</span><b>Token / żeton</b><p>Jednostka „paliwa" AI. Każde zapytanie je zużywa; mocniejsze modele więcej.</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Okno kontekstowe</b><p>Ile model pamięta w jednej rozmowie. Po zapełnieniu — kompresja do podsumowania.</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Model</b><p>Wersja AI (Sonnet 4.6, Opus) — różnią się mocą i kosztem.</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Repozytorium / GitHub</b><p>Folder w chmurze na pliki i bazę wiedzy — Wasz „skarbiec".</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Git</b><p>Łącznik (bramka) między komputerem a GitHubem. Instalujesz raz na maszynę.</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Skill</b><p>Umiejętność, której uczysz Claude i zapisujesz przez „/" do wielokrotnego użytku.</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Agent</b><p>Zestaw skilli działających po kolei — Twój automatyczny asystent.</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Sesja</b><p>Pojedyncza praca z Claude w danym folderze; na koniec pliki trafiają na GitHub.</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Cowork</b><p>Tryb, w którym Claude działa na Twoim komputerze (Drive, mail, przeglądarka).</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Claude Code</b><p>Najmocniejszy tryb — praca z plikami i repozytorium (nie tylko kodowanie).</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Brand Voice</b><p>„Głos marki" — dokument, dzięki któremu AI pisze jak Wy.</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>MCP</b><p>Łącznik Claude do narzędzi (np. Gmail) — automatyzacja i pobieranie danych.</p></div>
+    </div>
+  </section>
+
+  <footer class="reveal">
+    <div class="mark">Alchemia <i>Aesthetic</i></div>
+    <div class="rule"></div>
+    <p>Notatki ze szkolenia Claude/AI · Sesja 1 z 5 · <a href="index.html">Centrum szkoleniowe</a></p>
+    <p>Sesja 2 — 25/26.06 · Zaktualizowano 24.06.2026</p>
+  </footer>
+
+</div>
+
+<script>
+  const prog=document.getElementById('progress');
+  const onScroll=()=>{const h=document.documentElement;const sc=h.scrollTop/(h.scrollHeight-h.clientHeight);prog.style.width=(sc*100)+'%';};
+  document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.18,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  const counters=document.querySelectorAll('[data-count]');
+  const cio=new IntersectionObserver((entries)=>{entries.forEach(e=>{
+    if(!e.isIntersecting)return;const el=e.target,target=+el.dataset.count;const dur=1400,t0=performance.now();
+    const tick=(now)=>{const p=Math.min((now-t0)/dur,1);const eased=1-Math.pow(1-p,3);
+      el.textContent=Math.round(target*eased).toLocaleString('pl-PL');if(p<1)requestAnimationFrame(tick);};
+    requestAnimationFrame(tick);cio.unobserve(el);});},{threshold:.6});
+  counters.forEach(c=>cio.observe(c));
+
+  const navLinks=[...document.querySelectorAll('.nav a:not(.brand)')];
+  const sections=navLinks.map(a=>document.querySelector(a.getAttribute('href')));
+  const spy=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){const id='#'+e.target.id;
+    navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===id));}});},{rootMargin:'-45% 0px -50% 0px'});
+  sections.forEach(s=>s&&spy.observe(s));
+</script>
+</body>
+</html>
