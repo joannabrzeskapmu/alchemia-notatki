@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7f1ea">
+<meta name="description" content="Notatki ze szkolenia Claude/AI dla Alchemia Aesthetic, Sesja 2. Strona internetowa: staging, połączenie przez serwer, edycja logo, czcionek i kolorów z poziomu Claude.">
+<title>Szkolenie Claude · Sesja 2 · Strona internetowa · Alchemia Aesthetic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f1ea;--bg-2:#efe5da;--paper:#fffdfb;--ink:#2a211c;--ink-soft:#4d4039;--muted:#9a877b;
+    --accent:#b0875f;--accent-deep:#9a6f47;--champagne:#d9c4a8;--accent-soft:#ece0d1;
+    --line:#e8ddd0;--gold:#c9a87c;--rose:#dcb9a6;--green:#5d7a55;--green-bg:#eef3ea;
+    --red:#a8615a;--red-bg:#f8eeec;
+    --shadow-sm:0 2px 8px rgba(58,46,42,.04);
+    --shadow:0 18px 50px -22px rgba(120,82,52,.30);
+    --shadow-lg:0 40px 90px -40px rgba(120,82,52,.45);
+    --r-lg:28px;--r-md:18px;--r-sm:12px;
+    --ease:cubic-bezier(.22,.61,.36,1);--maxw:920px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;scroll-padding-top:92px;-webkit-text-size-adjust:100%;}
+  body{font-family:'Inter',-apple-system,system-ui,sans-serif;background:var(--bg);
+    color:var(--ink-soft);line-height:1.72;font-size:clamp(15px,.4vw + 14px,16.5px);
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative;}
+  body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background:
+      radial-gradient(60% 50% at 80% -5%, rgba(217,196,168,.55), transparent 60%),
+      radial-gradient(55% 45% at 0% 8%, rgba(220,185,166,.35), transparent 60%),
+      radial-gradient(70% 60% at 50% 110%, rgba(176,135,95,.18), transparent 60%),
+      var(--bg);}
+  body::after{content:"";position:fixed;inset:0;z-index:1000;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  ::selection{background:var(--accent);color:#fff;}
+
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:1100;
+    background:linear-gradient(90deg,var(--gold),var(--accent),var(--rose));}
+
+  .nav{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:900;
+    display:flex;align-items:center;gap:6px;padding:7px 8px 7px 18px;border-radius:100px;
+    background:rgba(255,253,251,.72);backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);border:1px solid rgba(255,255,255,.6);
+    box-shadow:0 10px 30px -12px rgba(120,82,52,.35);max-width:calc(100vw - 24px);}
+  .nav .brand{font-family:'Fraunces',serif;font-weight:600;font-size:15px;color:var(--ink);
+    letter-spacing:.2px;white-space:nowrap;padding-right:6px;text-decoration:none;transition:opacity .2s;}
+  .nav a.brand:hover{opacity:.7;background:none;}
+  .nav .brand i{font-style:normal;color:var(--accent);}
+  .nav .links{display:flex;gap:2px;}
+  .nav a{font-size:12.5px;color:var(--muted);text-decoration:none;padding:7px 12px;border-radius:100px;
+    transition:color .25s,background .25s;white-space:nowrap;font-weight:500;}
+  .nav a:hover{color:var(--ink);background:var(--accent-soft);}
+  .nav a.active{color:#fff;background:var(--accent);box-shadow:0 4px 12px -4px rgba(176,135,95,.7);}
+  @media(max-width:880px){.nav .links{display:none;}}
+
+  .page{max-width:var(--maxw);margin:0 auto;padding:120px 22px 60px;}
+
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}
+  .reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
+
+  .hero{position:relative;text-align:center;padding:46px 24px 8px;margin-bottom:30px;}
+  .hero .eyebrow{display:inline-flex;align-items:center;gap:10px;letter-spacing:4px;text-transform:uppercase;
+    font-size:11.5px;font-weight:600;color:var(--accent-deep);margin-bottom:26px;}
+  .hero .eyebrow::before,.hero .eyebrow::after{content:"";width:26px;height:1px;background:var(--champagne);}
+  .hero h1{font-family:'Fraunces',serif;font-size:clamp(46px,8.5vw,96px);line-height:.98;font-weight:340;
+    letter-spacing:-1.5px;color:var(--ink);margin-bottom:22px;}
+  .hero h1 em{font-style:italic;font-weight:430;
+    background:linear-gradient(100deg,var(--accent-deep),var(--gold) 55%,var(--rose));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .hero .sub{font-family:'Fraunces',serif;font-style:italic;font-weight:340;color:var(--ink-soft);
+    font-size:clamp(17px,2.4vw,22px);line-height:1.5;max-width:620px;margin:0 auto 4px;}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;max-width:760px;margin:42px auto 0;
+    background:rgba(255,253,251,.5);border:1px solid var(--line);border-radius:var(--r-md);
+    overflow:hidden;backdrop-filter:blur(6px);box-shadow:var(--shadow-sm);}
+  .stat{padding:22px 14px;text-align:center;border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat .num{font-family:'Fraunces',serif;font-weight:500;color:var(--accent-deep);
+    font-size:clamp(24px,4vw,36px);line-height:1;letter-spacing:-.5px;}
+  .stat .lab{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:9px;}
+  @media(max-width:620px){.stats{grid-template-columns:repeat(2,1fr);}
+    .stat:nth-child(2){border-right:none;}
+    .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--line);}}
+
+  section{position:relative;background:var(--paper);border-radius:var(--r-lg);
+    padding:clamp(30px,4.5vw,56px);margin-bottom:26px;border:1px solid var(--line);box-shadow:var(--shadow);}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:26px;}
+  .sec-num{font-family:'Fraunces',serif;font-weight:500;font-size:15px;color:var(--accent);flex:0 0 auto;
+    display:flex;align-items:center;gap:9px;letter-spacing:1px;}
+  .sec-num::before{content:"";width:30px;height:1px;background:var(--champagne);}
+  h2{font-family:'Fraunces',serif;font-size:clamp(27px,4vw,40px);font-weight:380;
+    letter-spacing:-.8px;color:var(--ink);line-height:1.04;}
+  h3{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+    color:var(--accent);margin:30px 0 14px;}
+  h3:first-of-type{margin-top:8px;}
+  p{margin-bottom:14px;}
+  p:last-child{margin-bottom:0;}
+  b,strong{color:var(--ink);font-weight:600;}
+  .lead{font-size:clamp(16px,2vw,18.5px);color:var(--ink-soft);font-weight:300;line-height:1.6;}
+
+  .quote{position:relative;background:linear-gradient(135deg,#faf4ec,#f4e9dc);
+    padding:26px 30px 26px 34px;border-radius:var(--r-sm);font-family:'Fraunces',serif;font-style:italic;
+    font-weight:340;font-size:clamp(17px,2.2vw,20px);line-height:1.5;color:var(--ink);margin:22px 0;
+    border:1px solid var(--line);}
+  .quote::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:3px;
+    background:linear-gradient(var(--gold),var(--rose));}
+  .quote.small{font-size:clamp(15px,1.8vw,17px);padding:20px 24px 20px 28px;}
+
+  ul{list-style:none;margin:6px 0;display:grid;gap:4px;}
+  ul li{padding:7px 0 7px 30px;position:relative;}
+  ul li::before{content:"";position:absolute;left:4px;top:15px;width:7px;height:7px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--rose));}
+  ul li b{color:var(--ink);}
+
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px;}
+  .chip{background:linear-gradient(180deg,#fff,var(--accent-soft));color:var(--ink-soft);
+    padding:8px 16px;border-radius:100px;font-size:13px;font-weight:500;border:1px solid var(--line);
+    box-shadow:var(--shadow-sm);transition:transform .25s var(--ease),box-shadow .25s,color .25s;}
+  .chip:hover{transform:translateY(-2px);box-shadow:0 8px 18px -8px rgba(120,82,52,.4);color:var(--ink);}
+
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px;}
+  @media(max-width:560px){.duo{grid-template-columns:1fr;}}
+
+  .formats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px;}
+  .fcard{position:relative;background:linear-gradient(165deg,#fffdfb,#f8efe4);border-radius:var(--r-md);
+    padding:22px;border:1px solid var(--line);overflow:hidden;
+    transition:transform .35s var(--ease),box-shadow .35s,border-color .35s;}
+  .fcard::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;
+    background:linear-gradient(135deg,transparent,rgba(201,168,124,.5));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s;}
+  .fcard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);}
+  .fcard:hover::before{opacity:1;}
+  .fcard .tag{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:600;}
+  .fcard b{display:block;font-family:'Fraunces',serif;font-weight:480;font-size:18px;color:var(--ink);
+    margin:8px 0 8px;letter-spacing:-.3px;}
+  .fcard p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.55;}
+  @media(max-width:760px){.formats{grid-template-columns:1fr 1fr;}}
+  @media(max-width:480px){.formats{grid-template-columns:1fr;}}
+
+  .note{display:flex;gap:16px;align-items:flex-start;margin:22px 0;padding:20px 24px;
+    background:var(--green-bg);border:1px solid #d8e4d2;border-radius:var(--r-sm);}
+  .note.gold{background:#faf4ec;border-color:var(--line);}
+  .note .ic{flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;}
+  .note.gold .ic{background:linear-gradient(135deg,var(--gold),var(--rose));}
+  .note .tx{font-size:14.5px;line-height:1.55;}
+  .note .tx b{color:var(--green);}
+  .note.gold .tx b{color:var(--accent-deep);}
+
+  .callback{display:flex;align-items:center;gap:14px;margin-top:18px;padding:16px 20px;text-decoration:none;
+    background:linear-gradient(135deg,#faf4ec,#f4e9dc);border:1px solid var(--line);border-radius:var(--r-sm);
+    transition:transform .3s var(--ease),box-shadow .3s;}
+  .callback:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+  .callback .ar{font-size:20px;color:var(--accent);}
+  .callback span{font-size:14px;color:var(--ink-soft);}
+  .callback b{color:var(--ink);}
+
+  footer{text-align:center;padding:54px 20px 14px;}
+  footer .mark{font-family:'Fraunces',serif;font-size:24px;font-weight:480;color:var(--ink);letter-spacing:-.4px;}
+  footer .mark i{font-style:normal;color:var(--accent);}
+  footer .rule{width:46px;height:1px;background:var(--champagne);margin:18px auto;}
+  footer p{color:var(--muted);font-size:12.5px;letter-spacing:.4px;margin:4px 0;}
+  footer a{color:var(--accent-deep);text-decoration:none;border-bottom:1px solid var(--champagne);}
+
+  @media(max-width:520px){.nav .brand{font-size:14px;}}
+  @media print{body{background:#fff;}body::before,body::after,.nav,.progress{display:none;}
+    .page{padding:0;}section,.fcard{box-shadow:none;break-inside:avoid;}.reveal{opacity:1;transform:none;}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}
+    .reveal{opacity:1;transform:none;}html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<nav class="nav">
+  <a class="brand" href="index.html" title="Powrót do centrum szkoleniowego">Alchemia <i>Aesthetic</i></a>
+  <span class="links">
+    <a href="#s1">Cel</a>
+    <a href="#s2">Zasady</a>
+    <a href="#s3">GitHub</a>
+    <a href="#s4">Staging</a>
+    <a href="#s5">Połączenie</a>
+    <a href="#s6">Edycja</a>
+    <a href="#s7">Inspiracja</a>
+    <a href="#s8">Słowniczek</a>
+  </span>
+</nav>
+
+<div class="page">
+
+  <header class="hero">
+    <div class="eyebrow reveal">Notatki ze szkoleń · Sesja 2</div>
+    <h1 class="reveal d1">Strona <em>internetowa</em></h1>
+    <p class="sub reveal d2">Jak zmieniać nową stronę prosto z Claude, bez kodu i bez stresu. Od bezpiecznego podłączenia po podmianę logo, czcionek i kolorów. Wszystko na wersji testowej, więc strona na żywo zostaje nietknięta.</p>
+
+    <div class="stats reveal d3">
+      <div class="stat"><div class="num">2 / 5</div><div class="lab">sesja szkolenia</div></div>
+      <div class="stat"><div class="num">~78</div><div class="lab">minut nagrania</div></div>
+      <div class="stat"><div class="num" data-count="3">3</div><div class="lab">rzeczy zmienione na żywo</div></div>
+      <div class="stat"><div class="num">0</div><div class="lab">ryzyka dla strony live</div></div>
+    </div>
+  </header>
+
+  <section id="s1">
+    <div class="sec-head reveal"><span class="sec-num">01</span><h2>O co w tej sesji chodzi</h2></div>
+    <p class="lead reveal">Celem jest nauczyć Cię <b>zmieniać nową stronę z poziomu Claude</b>, samodzielnie i bezpiecznie, bez wchodzenia w kod i bez ruszania strony, którą widzą klientki.</p>
+    <div class="reveal">
+      <h3>W pigułce: cała Sesja 2</h3>
+      <ul>
+        <li>Nowa strona stoi na <b>WordPressie</b>, ale edytujemy ją <b>przez Claude</b>, opisując po ludzku, co ma się zmienić.</li>
+        <li>Wszystko dzieje się na <b>wersji testowej (staging)</b>, czyli w piaskownicy. Strona na żywo jest nietknięta.</li>
+        <li>Claude łączy się ze stroną <b>przez serwer (FTP)</b> i wypycha zmiany komendami, bez klikania.</li>
+        <li>W praktyce zmieniliśmy już <b>logo, czcionkę i kolory</b>, mówiąc Claude, czego chcemy.</li>
+      </ul>
+      <h3>Dwie rzeczy, które daje ta sesja</h3>
+      <div class="duo">
+        <div class="fcard"><span class="tag">Rzecz 1</span><b>Bezpieczna piaskownica</b><p>Wersja testowa strony, na której można próbować do woli. Nic nie psuje strony widocznej dla klientek.</p></div>
+        <div class="fcard"><span class="tag">Rzecz 2</span><b>Edycja po ludzku</b><p>Mówisz, czego chcesz („zmień logo", „inna czcionka"), a Claude wprowadza to za Ciebie.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="s2">
+    <div class="sec-head reveal"><span class="sec-num">02</span><h2>Najpierw zasady (domknięcie Sesji 1)</h2></div>
+    <p class="lead reveal">Zanim ruszyliśmy stronę, zapisaliśmy Claude'owi <b>stałe zasady w repo</b>, żeby pamiętał je w każdej rozmowie, bez wpisywania w kółko.</p>
+    <div class="quote reveal">Na starcie zawsze proś, żeby <b>wczytał repo</b>. Wtedy przypomni sobie wszystkie zasady, które mu daliśmy.</div>
+    <div class="reveal">
+      <h3>Złote prompty (przypomnienie)</h3>
+      <div class="formats">
+        <div class="fcard"><span class="tag">1 · rola</span><b>Ekspert</b><p>„Wciel się w światowej klasy eksperta od…". Najpierw nadajesz Claude rolę, dopiero potem zadanie.</p></div>
+        <div class="fcard"><span class="tag">2 · aktualność</span><b>Bieżące trendy</b><p>„Skorzystaj z najnowszych trendów w obszarze, nad którym pracuję." Wymusza świeży research.</p></div>
+        <div class="fcard"><span class="tag">3 · jakość</span><b>Auto-audyt 99/100</b><p>„Po skończeniu zrób sam audyt i poprawiaj, aż ocenisz to na 99/100." Sam się sprawdza i podkręca.</p></div>
+      </div>
+      <div class="note gold"><div class="ic">★</div><div class="tx"><b>Dodatkowa zasada zapisana w repo:</b> unikać <b>myślników</b> w tekstach (są „AI-owe"). Każdą taką regułę zapisujemy raz w repo i Claude stosuje ją zawsze, gdy na starcie wczyta repo.</div></div>
+      <div class="note"><div class="ic">✓</div><div class="tx"><b>Dobry nawyk na koniec sesji:</b> poproś, żeby <b>zapisał sesję i Twój feedback do repo</b>, oraz żeby <b>skille uczyły się</b> na podstawie Twoich uwag, kolejne efekty będą coraz lepsze.</div></div>
+      <p style="margin-top:6px;font-size:13.5px;color:var(--muted);">Uwaga: te zasady działają w trybie <b style="color:var(--ink-soft)">Claude Code</b>, bo tylko on ma dostęp do repo. W zwykłym czacie ich nie wczyta.</p>
+    </div>
+  </section>
+
+  <section id="s3">
+    <div class="sec-head reveal"><span class="sec-num">03</span><h2>GitHub a repo: to nie to samo</h2></div>
+    <p class="lead reveal"><b>Repo</b> (repozytorium) to <b>jeden folder</b> w GitHubie. Repozytoriów jest już kilka, bo np. treści marki są w jednym, a strona internetowa w osobnym.</p>
+    <div class="reveal">
+      <h3>Jak się w tym połapać</h3>
+      <ul>
+        <li><b>GitHub</b> = całe konto ze wszystkimi folderami. <b>Repo</b> = pojedynczy folder (skarbiec) w środku.</li>
+        <li>Repozytoria zobaczysz po kliknięciu nazwy konta w <b>lewym górnym rogu</b> GitHuba.</li>
+        <li>Gdy Claude nie znajdzie czegoś w jednym repo, poproś, żeby <b>przeszukał całego GitHuba</b>, może to być w innym folderze.</li>
+        <li>Nie musisz pilnować idealnego porządku, Claude i tak się odnajdzie. Z czasem warto posprzątać (Claude może to zaproponować i zrobić).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="s4">
+    <div class="sec-head reveal"><span class="sec-num">04</span><h2>Staging: bezpieczna piaskownica</h2></div>
+    <p class="lead reveal"><b>Staging</b> to wersja testowa strony, „work in progress". Tu dopracowujemy stronę, zanim trafi na żywo.</p>
+    <div class="quote reveal">To taka piaskownica, gdzie stronę spokojnie dopracujemy, a dopiero gdy będziemy zadowoleni, puścimy ją na żywo.</div>
+    <div class="reveal">
+      <ul>
+        <li>Dostępna pod adresem z dopiskiem <b>/staging/</b>, za hasłem, <b>nie jest publiczna</b>.</li>
+        <li>Zmiany na stagingu <b>nie ruszają strony live</b> (tej, którą widzą klientki).</li>
+        <li>Pracujemy tu aż wszystko będzie gotowe.</li>
+        <li><b>Przeniesienie na żywo zrobimy razem</b>, to osobny, pilnowany krok.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="s5">
+    <div class="sec-head reveal"><span class="sec-num">05</span><h2>Jak Claude łączy się ze stroną</h2></div>
+    <p class="lead reveal">Claude łączy się ze stroną <b>przez serwer</b> (połączenie nazywa się FTP). Dzięki temu wprowadza zmiany bezpośrednio, bez klikania w panelu.</p>
+    <div class="quote reveal">Serwer to <b>gniazdo</b>, w które włożona jest strona. Dajemy Claude dostęp do tego gniazda, żeby wypychał zmiany prosto do strony.</div>
+    <div class="reveal">
+      <ul>
+        <li>Zamiast klikać w WordPressie, Claude wprowadza zmiany <b>komendami „na zapleczu"</b>. Nie widzisz tego, dzieje się w kodzie.</li>
+        <li>Dostęp (hasło do serwera) podaje się <b>raz na każdym komputerze</b>, na którym pracujesz nad stroną.</li>
+        <li>Hasło <b>wpisujemy do pliku</b> (Claude go tworzy), nigdy nie trzeba go nikomu dyktować ani trzymać w czacie.</li>
+      </ul>
+      <div class="note"><div class="ic">✓</div><div class="tx"><b>Bez obaw o terminal:</b> nie musisz w nim nic samodzielnie robić. Mówisz po ludzku, a Claude prowadzi <b>krok po kroku</b>: gdzie wejść, co kliknąć.</div></div>
+    </div>
+  </section>
+
+  <section id="s6">
+    <div class="sec-head reveal"><span class="sec-num">06</span><h2>Edycja na żywo: co już zmienialiśmy</h2></div>
+    <p class="lead reveal">Najlepsze w tym jest to, że <b>mówisz, czego chcesz, Claude zmienia, a Ty od razu widzisz efekt na stagingu.</b></p>
+    <div class="reveal">
+      <div class="formats">
+        <div class="fcard"><span class="tag">zmiana 1</span><b>Logo</b><p>Czarne na jasnym tle (nagłówek), białe na ciemnym (stopka). Claude sam zrobił białą wersję i dopasował rozmiar („zmniejsz o połowę").</p></div>
+        <div class="fcard"><span class="tag">zmiana 2</span><b>Czcionka</b><p>Poproś o <b>próbnik</b> i o <b>zestawy</b> czcionek (zwykle 2, max 3 na stronie), zamiast pojedynczych. Łatwiej wybrać spójnie.</p></div>
+        <div class="fcard"><span class="tag">zmiana 3</span><b>Kolory</b><p>Sprawa subiektywna, warto dograć z zespołem. Tu pomaga inspiracja z innych stron (sekcja niżej).</p></div>
+      </div>
+      <div class="note gold"><div class="ic">↻</div><div class="tx"><b>Po każdej zmianie odśwież „na twardo":</b> <b>Cmd + Shift + R</b> (Mac). Inaczej przeglądarka może pokazać starą wersję z pamięci (ciasteczka).</div></div>
+      <p style="margin-top:6px;">Zasada: <b>najpierw podgląd na stagingu</b>, dopiero gdy się podoba, uznajemy zmianę za pewną.</p>
+    </div>
+  </section>
+
+  <section id="s7">
+    <div class="sec-head reveal"><span class="sec-num">07</span><h2>Skąd czerpać inspirację</h2></div>
+    <p class="lead reveal">Inspiracji do układu i wyglądu warto szukać w <b>rankingach web designu</b>, tam, gdzie nagradzane są najlepsze strony.</p>
+    <div class="reveal">
+      <ul>
+        <li>Np. <b>awwwards</b>, nominacje najlepszych designów stron. Wybierasz <b>kategorię</b> (np. beauty) i przeglądasz.</li>
+        <li>Często są przekombinowane, ale łapie się z nich <b>fajne smaczki</b> i ciekawe połączenia kolorów.</li>
+        <li>Patrz nie tylko na „ładność", ale na <b>układ (layout)</b>, czyli jak rozmieszczone są sekcje i materiały.</li>
+      </ul>
+      <div class="chips">
+        <span class="chip">layout (układ sekcji)</span>
+        <span class="chip">połączenia kolorów</span>
+        <span class="chip">typografia</span>
+        <span class="chip">kreatywne wstawki</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="s8">
+    <div class="sec-head reveal"><span class="sec-num">08</span><h2>Słowniczek pojęć</h2></div>
+    <p class="lead reveal">Krótkie wyjaśnienia pojęć z tej sesji, żeby nic nie było „czarną magią".</p>
+    <div class="formats reveal">
+      <div class="fcard"><span class="tag">pojęcie</span><b>Staging</b><p>Wersja testowa strony (piaskownica) pod adresem /staging/. Zmiany tu nie ruszają strony live.</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Live</b><p>Wersja strony widoczna publicznie dla klientek, ta „na żywo" na właściwym adresie.</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Serwer</b><p>„Gniazdo", w którym działa strona. Trzyma jej pliki i udostępnia je w internecie.</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>FTP</b><p>Połączenie przez serwer, którym Claude wypycha zmiany prosto do strony, bez klikania w panelu.</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Repo a GitHub</b><p>GitHub to całe konto; repo to jeden folder (skarbiec) w środku. Repozytoriów może być kilka.</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Push</b><p>Wysłanie zmian z komputera do GitHuba (albo na serwer strony). „Odłożenie na półkę".</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Layout</b><p>Rozmieszczenie sekcji i materiałów na stronie, jej układ.</p></div>
+      <div class="fcard"><span class="tag">pojęcie</span><b>Twarde odświeżenie</b><p>Cmd + Shift + R, wymusza pobranie najnowszej wersji strony zamiast tej z pamięci.</p></div>
+    </div>
+  </section>
+
+  <footer class="reveal">
+    <div class="mark">Alchemia <i>Aesthetic</i></div>
+    <div class="rule"></div>
+    <p>Notatki ze szkolenia Claude/AI · Sesja 2 z 5 · <a href="index.html">Centrum szkoleniowe</a></p>
+    <p>Strona internetowa · Zaktualizowano 25.06.2026</p>
+  </footer>
+
+</div>
+
+<script>
+  const prog=document.getElementById('progress');
+  const onScroll=()=>{const h=document.documentElement;const sc=h.scrollTop/(h.scrollHeight-h.clientHeight);prog.style.width=(sc*100)+'%';};
+  document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.18,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  const counters=document.querySelectorAll('[data-count]');
+  const cio=new IntersectionObserver((entries)=>{entries.forEach(e=>{
+    if(!e.isIntersecting)return;const el=e.target,target=+el.dataset.count;const dur=1400,t0=performance.now();
+    const tick=(now)=>{const p=Math.min((now-t0)/dur,1);const eased=1-Math.pow(1-p,3);
+      el.textContent=Math.round(target*eased).toLocaleString('pl-PL');if(p<1)requestAnimationFrame(tick);};
+    requestAnimationFrame(tick);cio.unobserve(el);});},{threshold:.6});
+  counters.forEach(c=>cio.observe(c));
+
+  const navLinks=[...document.querySelectorAll('.nav a:not(.brand)')];
+  const sections=navLinks.map(a=>document.querySelector(a.getAttribute('href')));
+  const spy=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){const id='#'+e.target.id;
+    navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===id));}});},{rootMargin:'-45% 0px -50% 0px'});
+  sections.forEach(s=>s&&spy.observe(s));
+</script>
+</body>
+</html>
