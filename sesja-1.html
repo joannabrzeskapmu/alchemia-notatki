@@ -196,6 +196,26 @@
     .page{padding:0;}section,.fcard{box-shadow:none;break-inside:avoid;}.reveal{opacity:1;transform:none;}}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}
     .reveal{opacity:1;transform:none;}html{scroll-behavior:auto;}}
+
+  /* --- dodatki 10x: gotowce do kopiowania, ostrzezenia, kroki --- */
+  .snippet{position:relative;background:#2a211c;color:#f3e9dd;border-radius:var(--r-sm);
+    padding:18px 20px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;
+    line-height:1.65;margin:16px 0;white-space:pre-wrap;border:1px solid #3a2f27;box-shadow:var(--shadow-sm);}
+  .snippet .lab{display:block;font-family:'Inter',sans-serif;font-size:10.5px;letter-spacing:1.5px;
+    text-transform:uppercase;color:var(--champagne);margin-bottom:10px;font-weight:600;}
+  .snippet b{color:#fff;}
+  .note.warn{background:var(--red-bg);border-color:#eccfca;}
+  .note.warn .ic{background:var(--red);}
+  .note.warn .tx b{color:var(--red);}
+  .steps{display:grid;gap:12px;margin-top:8px;counter-reset:st;}
+  .stepi{display:flex;gap:16px;align-items:flex-start;background:#faf4ec;border:1px solid var(--line);
+    border-radius:var(--r-sm);padding:15px 20px;}
+  .stepi .n{counter-increment:st;flex:0 0 30px;width:30px;height:30px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--rose));color:#fff;display:flex;align-items:center;
+    justify-content:center;font-family:'Fraunces',serif;font-weight:500;font-size:15px;}
+  .stepi .n::before{content:counter(st);}
+  .stepi .t{font-size:14.5px;line-height:1.55;}
+  .stepi .t b{color:var(--ink);}
 </style>
 </head>
 <body>
@@ -212,6 +232,7 @@
     <a href="#s9">Brand Voice</a>
     <a href="#s10">Prompty</a>
     <a href="#s14">Słowniczek</a>
+    <a href="#s15">Ściąga</a>
   </span>
 </nav>
 
@@ -398,16 +419,21 @@
   </section>
 
   <section id="s10">
-    <div class="sec-head reveal"><span class="sec-num">10</span><h2>Dwa złote prompty</h2></div>
-    <p class="lead reveal">Sztuczka, jak zmusić Claude, żeby działał jak <b>światowej klasy ekspert</b>. Najpierw określ rolę („jesteś ekspertem od marketingu"), a potem dodaj te dwa prompty.</p>
+    <div class="sec-head reveal"><span class="sec-num">10</span><h2>Trzy złote prompty</h2></div>
+    <p class="lead reveal">Najprostszy sposób, żeby Claude pracował jak <b>światowej klasy ekspert</b>, a nie przeciętny pomocnik. Trzy zdania, które dokładasz do zadania, niezależnie czy robisz post, strategię, czy stronę.</p>
     <div class="reveal">
-      <div class="duo">
-        <div class="fcard"><span class="tag">Prompt 1 · aktualność</span><b>Bieżące trendy</b><p>„Skup się, żeby to było zgodne z <b>najbardziej bieżącymi trendami</b> w mojej branży." → wymusza research zamiast wiedzy sprzed lat (np. artykułu z 2020).</p></div>
-        <div class="fcard"><span class="tag">Prompt 2 · jakość</span><b>Auto-audyt</b><p>„Jak skończysz, zrób sam audyt i poprawiaj, aż ocenisz to na <b>99/100</b> jako światowej klasy ekspert." → sam się krytykuje i poprawia niedociągnięcia.</p></div>
+      <div class="formats">
+        <div class="fcard"><span class="tag">1 · rola</span><b>Wciel się w eksperta</b><p>Nadajesz Claude rolę specjalisty z danej dziedziny. Wtedy myśli jak ekspert, a nie ogólnikowo.</p></div>
+        <div class="fcard"><span class="tag">2 · aktualność</span><b>Bieżące trendy</b><p>Wymuszasz świeży research zamiast wiedzy sprzed lat (np. artykułu z 2020).</p></div>
+        <div class="fcard"><span class="tag">3 · jakość</span><b>Auto-audyt 99/100</b><p>Claude sam siebie ocenia i poprawia w pętli, aż osiągnie 99/100. Tu najbardziej rośnie jakość.</p></div>
       </div>
+      <div class="snippet"><span class="lab">Skopiuj i wklej na końcu polecenia</span>Wciel się w światowej klasy eksperta od [np. marketingu beauty / projektowania stron].
+Zanim zaczniesz, sprawdź najbardziej aktualne, bieżące trendy w tym obszarze i kieruj się nimi.
+Gdy skończysz, zaudytuj swoją pracę oczami tego eksperta: wypisz, co obniża wynik, popraw, i powtarzaj pętlę, aż ocenisz to na 99/100.</div>
+      <div class="note gold"><div class="ic">★</div><div class="tx"><b>Dlaczego to działa:</b> rola ustawia poziom myślenia, „trendy" wymuszają research zamiast zgadywania, a „audyt do 99/100" sprawia, że Claude nie odda Ci pierwszej, byle wersji, tylko dopracowaną.</div></div>
       <a class="callback" href="raport-strategia.html">
         <span class="ar">✶</span>
-        <span><b>Tak właśnie powstał raport „Strategia Contentowa".</b> Claude sprawdził trendy, zrobił 4× auto-audyt i wygenerował stylowany raport HTML. Zobacz efekt →</span>
+        <span><b>Tak właśnie powstał raport „Strategia Contentowa".</b> Claude sprawdził trendy, zrobił kilka rund auto-audytu i wygenerował stylowany raport. Zobacz efekt →</span>
       </a>
     </div>
   </section>
@@ -459,11 +485,39 @@
     </div>
   </section>
 
+  <section id="s15">
+    <div class="sec-head reveal"><span class="sec-num">14</span><h2>Ściąga: zacznij jutro</h2></div>
+    <p class="lead reveal">Cała sesja w jednej, praktycznej ściądze, do której wracasz, gdy siadasz do pracy.</p>
+    <div class="reveal">
+      <h3>Trzy nawyki, które robią różnicę</h3>
+      <ul>
+        <li><b>Na starcie:</b> „Wczytaj repo i zastosuj zasady" — żeby Claude pamiętał ustalenia i głos marki.</li>
+        <li><b>W trakcie:</b> dawaj <b>cel</b>, nie sztywne zadanie, i dopytuj „co jeszcze byłoby potrzebne?".</li>
+        <li><b>Na koniec:</b> „Zapisz sesję i mój feedback do repo, i ucz się na tym na przyszłość".</li>
+      </ul>
+      <h3>Prompt na start każdej pracy</h3>
+      <div class="snippet"><span class="lab">Skopiuj na początku nowej rozmowy (Claude Code)</span>Wczytaj nasze repo i zastosuj zapisane w nim zasady.
+Wciel się w światowej klasy eksperta od [dziedzina].
+Celem jest [czego chcę] — zaproponuj najlepszą drogę i powiedz, czego jeszcze potrzebujesz.</div>
+      <h3>Częste błędy (i jak ich uniknąć)</h3>
+      <div class="note warn"><div class="ic">!</div><div class="tx"><b>Słaby model do trudnej rzeczy.</b> Strategia, kampania, strona → Opus. Sonnet zostaw na proste, codzienne zadania.</div></div>
+      <div class="note warn"><div class="ic">!</div><div class="tx"><b>Zadanie zamiast celu.</b> „Zrób X, Y, Z" daje dokładnie X, Y, Z. Cel pozwala Claude znaleźć lepsze rozwiązanie.</div></div>
+      <div class="note warn"><div class="ic">!</div><div class="tx"><b>Brak „wczytaj repo" na starcie.</b> Bez tego Claude nie zna Waszych zasad i głosu marki, pracuje „na ślepo".</div></div>
+      <h3>Zrób to jutro (5 minut)</h3>
+      <div class="steps">
+        <div class="stepi"><span class="n"></span><span class="t"><b>Otwórz Claude Code</b> i wskaż folder na pliki z tej sesji.</span></div>
+        <div class="stepi"><span class="n"></span><span class="t">Napisz: <b>„Wczytaj repo i zastosuj zasady"</b>.</span></div>
+        <div class="stepi"><span class="n"></span><span class="t">Daj jeden <b>konkretny cel</b> (np. „tekst na rolkę o zabiegu X") z trzema złotymi promptami.</span></div>
+        <div class="stepi"><span class="n"></span><span class="t">Na koniec: <b>„Zapisz sesję i feedback do repo"</b>.</span></div>
+      </div>
+    </div>
+  </section>
+
   <footer class="reveal">
     <div class="mark">Alchemia <i>Aesthetic</i></div>
     <div class="rule"></div>
     <p>Notatki ze szkolenia Claude/AI · Sesja 1 z 5 · <a href="index.html">Centrum szkoleniowe</a></p>
-    <p>Sesja 2 · 25/26.06 · Zaktualizowano 24.06.2026</p>
+    <p>Zaktualizowano 25.06.2026</p>
   </footer>
 
 </div>

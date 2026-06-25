@@ -172,6 +172,26 @@
     .page{padding:0;}section,.fcard{box-shadow:none;break-inside:avoid;}.reveal{opacity:1;transform:none;}}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}
     .reveal{opacity:1;transform:none;}html{scroll-behavior:auto;}}
+
+  /* --- dodatki 10x: gotowce do kopiowania, ostrzezenia, kroki --- */
+  .snippet{position:relative;background:#2a211c;color:#f3e9dd;border-radius:var(--r-sm);
+    padding:18px 20px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;
+    line-height:1.65;margin:16px 0;white-space:pre-wrap;border:1px solid #3a2f27;box-shadow:var(--shadow-sm);}
+  .snippet .lab{display:block;font-family:'Inter',sans-serif;font-size:10.5px;letter-spacing:1.5px;
+    text-transform:uppercase;color:var(--champagne);margin-bottom:10px;font-weight:600;}
+  .snippet b{color:#fff;}
+  .note.warn{background:var(--red-bg);border-color:#eccfca;}
+  .note.warn .ic{background:var(--red);}
+  .note.warn .tx b{color:var(--red);}
+  .steps{display:grid;gap:12px;margin-top:8px;counter-reset:st;}
+  .stepi{display:flex;gap:16px;align-items:flex-start;background:#faf4ec;border:1px solid var(--line);
+    border-radius:var(--r-sm);padding:15px 20px;}
+  .stepi .n{counter-increment:st;flex:0 0 30px;width:30px;height:30px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--rose));color:#fff;display:flex;align-items:center;
+    justify-content:center;font-family:'Fraunces',serif;font-weight:500;font-size:15px;}
+  .stepi .n::before{content:counter(st);}
+  .stepi .t{font-size:14.5px;line-height:1.55;}
+  .stepi .t b{color:var(--ink);}
 </style>
 </head>
 <body>
@@ -188,6 +208,7 @@
     <a href="#s6">Edycja</a>
     <a href="#s7">Inspiracja</a>
     <a href="#s8">Słowniczek</a>
+    <a href="#s9">Ściąga</a>
   </span>
 </nav>
 
@@ -329,6 +350,31 @@
       <div class="fcard"><span class="tag">pojęcie</span><b>Push</b><p>Wysłanie zmian z komputera do GitHuba (albo na serwer strony). „Odłożenie na półkę".</p></div>
       <div class="fcard"><span class="tag">pojęcie</span><b>Layout</b><p>Rozmieszczenie sekcji i materiałów na stronie, jej układ.</p></div>
       <div class="fcard"><span class="tag">pojęcie</span><b>Twarde odświeżenie</b><p>Cmd + Shift + R, wymusza pobranie najnowszej wersji strony zamiast tej z pamięci.</p></div>
+    </div>
+  </section>
+
+  <section id="s9">
+    <div class="sec-head reveal"><span class="sec-num">09</span><h2>Ściąga: bezpieczna edycja strony</h2></div>
+    <p class="lead reveal">Wszystko, czego potrzebujesz, żeby pewnie zmieniać stronę, w jednym miejscu.</p>
+    <div class="reveal">
+      <h3>Prompt na start pracy nad stroną</h3>
+      <div class="snippet"><span class="lab">Skopiuj na początku rozmowy (Claude Code)</span>Wczytaj repo strony i zastosuj zasady.
+Pracujemy na wersji testowej (staging), nie na produkcji.
+Wciel się w światowej klasy projektanta stron.
+Cel: [co chcę zmienić]. Pokaż efekt na stagingu i prowadź mnie krok po kroku.</div>
+      <h3>Złota zasada bezpieczeństwa</h3>
+      <div class="quote">Najpierw staging, potem życie. Zmiany oglądamy na wersji testowej, a na żywo przenosimy je dopiero, gdy są gotowe, i robimy to wspólnie.</div>
+      <h3>Częste błędy (i jak ich uniknąć)</h3>
+      <div class="note warn"><div class="ic">!</div><div class="tx"><b>„Nie widzę zmiany".</b> To najczęściej cache. Zrób twarde odświeżenie <b>Cmd + Shift + R</b>, zanim uznasz, że coś nie działa.</div></div>
+      <div class="note warn"><div class="ic">!</div><div class="tx"><b>Praca na żywej stronie.</b> Zmiany rób na <b>stagingu</b>. Produkcję ruszamy świadomie i razem.</div></div>
+      <div class="note warn"><div class="ic">!</div><div class="tx"><b>Płatność testowa na stagingu.</b> Bramka płatności działa tylko na żywej stronie. Na stagingu testuj do ekranu kasy, bez finalizacji.</div></div>
+      <h3>Zrób to jutro (5 minut)</h3>
+      <div class="steps">
+        <div class="stepi"><span class="n"></span><span class="t">Otwórz stronę testową (adres z dopiskiem <b>/staging/</b>).</span></div>
+        <div class="stepi"><span class="n"></span><span class="t">W Claude Code: <b>„Wczytaj repo strony, pracujemy na stagingu"</b>.</span></div>
+        <div class="stepi"><span class="n"></span><span class="t">Powiedz po ludzku, <b>co zmienić</b> (tekst, kolor, zdjęcie).</span></div>
+        <div class="stepi"><span class="n"></span><span class="t">Odśwież <b>Cmd + Shift + R</b> i sprawdź efekt na stagingu.</span></div>
+      </div>
     </div>
   </section>
 
