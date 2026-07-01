@@ -1,227 +1,130 @@
-<!DOCTYPE html>
-<html lang="pl">
+<!doctype html>
+<html lang="pl" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#f7f1ea">
-<meta name="description" content="Centrum szkoleniowe Alchemia Aesthetic, notatki ze szkoleń i materiały w jednym miejscu.">
-<title>Centrum szkoleniowe · Alchemia Aesthetic</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hub szkoleniowy · Alchemia Aesthetic × Claude</title>
+<meta name="description" content="Spokojny, piękny przewodnik po pracy z Claude: GitHub, strona WordPress i tworzenie contentu. Wszystkie pojęcia wyjaśnione od podstaw.">
+<meta name="color-scheme" content="light dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#f7f1ea;--paper:#fffdfb;--ink:#2a211c;--ink-soft:#4d4039;--muted:#9a877b;
-    --accent:#b0875f;--accent-deep:#9a6f47;--champagne:#d9c4a8;--accent-soft:#ece0d1;
-    --line:#e8ddd0;--gold:#c9a87c;--rose:#dcb9a6;
-    --shadow-sm:0 2px 8px rgba(58,46,42,.04);
-    --shadow:0 18px 50px -22px rgba(120,82,52,.30);
-    --shadow-lg:0 40px 90px -40px rgba(120,82,52,.45);
-    --r-lg:28px;--r-md:18px;--r-sm:12px;
-    --ease:cubic-bezier(.22,.61,.36,1);--spring:cubic-bezier(.34,1.4,.64,1);--maxw:960px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
-  body{font-family:'Inter',-apple-system,system-ui,sans-serif;background:var(--bg);
-    color:var(--ink-soft);line-height:1.72;font-size:clamp(15px,.4vw + 14px,16.5px);
-    -webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative;min-height:100vh;}
-  body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
-    background:
-      radial-gradient(60% 50% at 80% -5%, rgba(217,196,168,.55), transparent 60%),
-      radial-gradient(55% 45% at 0% 8%, rgba(220,185,166,.35), transparent 60%),
-      radial-gradient(70% 60% at 50% 110%, rgba(176,135,95,.18), transparent 60%),
-      var(--bg);}
-  body::after{content:"";position:fixed;inset:0;z-index:1000;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
-  ::selection{background:var(--accent);color:#fff;}
-
-  .page{max-width:var(--maxw);margin:0 auto;padding:clamp(64px,11vh,120px) 22px 60px;}
-
-  .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
-  .reveal.in{opacity:1;transform:none;}
-  .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}
-  .reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
-
-  /* hero */
-  .hero{position:relative;text-align:center;padding:14px 16px 36px;}
-  .hero::before{content:"";position:absolute;left:50%;top:-46px;width:min(640px,92%);height:360px;
-    transform:translateX(-50%);z-index:-1;pointer-events:none;
-    background:radial-gradient(45% 55% at 50% 40%, rgba(201,168,124,.40), rgba(220,185,166,.18) 46%, transparent 72%);
-    filter:blur(8px);animation:haloDrift 15s var(--ease) infinite;}
-  .hero .eyebrow{display:inline-flex;align-items:center;gap:11px;letter-spacing:4.5px;text-transform:uppercase;
-    font-size:11.5px;font-weight:600;color:var(--accent-deep);margin-bottom:26px;}
-  .hero .eyebrow::before{content:"";width:32px;height:1px;background:linear-gradient(90deg,transparent,var(--champagne));}
-  .hero .eyebrow::after{content:"";width:32px;height:1px;background:linear-gradient(90deg,var(--champagne),transparent);}
-  .hero h1{font-family:'Fraunces',serif;font-size:clamp(46px,9vw,104px);line-height:.95;font-weight:330;
-    letter-spacing:-2px;color:var(--ink);margin-bottom:22px;font-variation-settings:"opsz" 144;}
-  .hero h1 em{font-style:italic;font-weight:440;
-    background:linear-gradient(100deg,var(--accent-deep),var(--gold) 55%,var(--rose));
-    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-  .hero .sub{font-family:'Fraunces',serif;font-style:italic;font-weight:340;color:var(--ink-soft);
-    font-size:clamp(17px,2.4vw,23px);line-height:1.5;max-width:580px;margin:0 auto;}
-  @keyframes haloDrift{0%,100%{transform:translateX(-50%) translateY(0) scale(1);opacity:.82;}
-    50%{transform:translateX(-50%) translateY(16px) scale(1.07);opacity:1;}}
-
-  /* group (dedykowana strefa) */
-  .group{margin-top:clamp(38px,6vw,58px);}
-  .group-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;
-    padding-bottom:18px;margin-bottom:22px;border-bottom:1px solid var(--line);}
-  .group-head .gh-l{display:flex;flex-direction:column;gap:8px;}
-  .group-head .lab{display:inline-flex;align-items:center;gap:9px;letter-spacing:2.5px;text-transform:uppercase;
-    font-size:11px;font-weight:600;color:var(--accent-deep);}
-  .group-head .lab::before{content:"";width:22px;height:1px;background:var(--champagne);}
-  .group-head h2{font-family:'Fraunces',serif;font-weight:380;font-size:clamp(26px,4vw,38px);
-    letter-spacing:-.7px;color:var(--ink);line-height:1.02;}
-  .group-head .count{flex:0 0 auto;font-size:12.5px;color:var(--muted);font-weight:500;
-    background:var(--paper);border:1px solid var(--line);border-radius:100px;padding:7px 15px;white-space:nowrap;
-    box-shadow:var(--shadow-sm);}
-
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-  @media(max-width:680px){.cards{grid-template-columns:1fr;}.group-head{flex-direction:column;align-items:flex-start;}}
-
-  a.card{display:flex;flex-direction:column;text-decoration:none;position:relative;
-    background:linear-gradient(168deg,var(--paper),#fbf4ea);border:1px solid var(--line);border-radius:var(--r-lg);
-    padding:clamp(26px,3.4vw,38px);box-shadow:var(--shadow);overflow:hidden;
-    transition:transform .4s var(--spring),box-shadow .4s var(--ease);}
-  a.card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;
-    background:linear-gradient(135deg,transparent,rgba(201,168,124,.6));
-    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s;}
-  a.card::after{content:"";position:absolute;left:0;right:0;top:0;height:3px;
-    background:linear-gradient(90deg,var(--gold),var(--rose));transform:scaleX(0);transform-origin:left;
-    transition:transform .45s var(--ease);}
-  a.card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg);}
-  a.card:hover::before{opacity:1;}
-  a.card:hover::after{transform:scaleX(1);}
-  a.card.soon{pointer-events:none;opacity:.62;}
-
-  /* episode number badge */
-  .card .epno{position:absolute;top:18px;right:24px;font-family:'Fraunces',serif;font-weight:500;font-style:italic;
-    font-size:clamp(34px,5.5vw,54px);line-height:1;letter-spacing:-1px;
-    background:linear-gradient(135deg,var(--accent-soft),var(--champagne));
-    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-    transition:opacity .35s,transform .4s var(--spring);opacity:.85;}
-  a.card:hover .epno{opacity:1;transform:scale(1.06) rotate(-2deg);}
-
-  .card .tag{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:600;}
-  .card h3{font-family:'Fraunces',serif;font-weight:430;font-size:clamp(21px,3vw,27px);
-    color:var(--ink);margin:10px 0 9px;letter-spacing:-.4px;line-height:1.1;padding-right:54px;}
-  .card p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.55;flex:1;padding-right:8px;}
-  .card .go{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-weight:600;
-    font-size:13.5px;color:var(--accent-deep);}
-  .card .go .arr{transition:transform .3s var(--ease);}
-  a.card:hover .go .arr{transform:translateX(5px);}
-  .card .go.muted{color:var(--muted);}
-
-  footer{text-align:center;padding:56px 20px 14px;}
-  footer .mark{font-family:'Fraunces',serif;font-size:22px;font-weight:480;color:var(--ink);letter-spacing:-.4px;}
-  footer .mark i{font-style:normal;color:var(--accent);}
-  footer .rule{width:46px;height:1px;background:var(--champagne);margin:18px auto;}
-  footer p{color:var(--muted);font-size:12.5px;letter-spacing:.4px;margin:4px 0;}
-
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}
-    .reveal{opacity:1;transform:none;}html{scroll-behavior:auto;}}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,330..600;1,9..144,330..600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="page">
+<a class="skip" href="#main">Przejdź do treści</a>
+<div class="progress" aria-hidden="true"></div>
 
-  <header class="hero">
-    <div class="eyebrow reveal">Centrum szkoleniowe</div>
-    <h1 class="reveal d1">Alchemia <em>Aesthetic</em></h1>
-    <p class="sub reveal d2">Wszystkie notatki ze szkoleń i materiały, w jednym miejscu, zawsze pod ręką.</p>
-  </header>
-
-  <!-- STREFA 1: NOTATKI ZE SZKOLEŃ -->
-  <section class="group">
-    <div class="group-head reveal">
-      <div class="gh-l">
-        <span class="lab">Notatki ze szkoleń</span>
-        <h2>Sesje szkolenia</h2>
-      </div>
-      <span class="count">2 z 5 gotowych</span>
+<header class="topnav">
+  <div class="wrap row">
+    <a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span>Alchemia <em>Hub</em></a>
+    <nav class="nav-links" aria-label="Główna nawigacja">
+      <a href="index.html">Start</a>
+      <a href="sesja-1.html">Sesja 1</a>
+      <a href="sesja-2.html">Sesja 2</a>
+      <a href="system-contentu.html">System contentu</a>
+      <a href="slowniczek.html">Słowniczek</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="iconbtn theme-toggle" aria-label="Przełącz tryb jasny / ciemny" title="Tryb jasny / ciemny">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></svg>
+      </button>
+      <button class="iconbtn menu-btn" aria-label="Menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
     </div>
-    <div class="cards">
-      <a class="card reveal d1" href="sesja-1.html">
-        <span class="epno">01</span>
-        <span class="tag">Sesja 1 · gotowa</span>
-        <h3>Claude dla Alchemii</h3>
-        <p>Komplet z pierwszego dnia: modele, tryby pracy, skarbiec wiedzy, repozytorium i Git, skille i agenci, głos marki, dwa złote prompty.</p>
-        <span class="go">Otwórz notatki <span class="arr">→</span></span>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+
+  <section class="hero">
+    <div class="halo" aria-hidden="true"></div>
+    <div class="eyebrow">Baza wiedzy · Alchemia Aesthetic</div>
+    <h1>Naucz się pracować<br><em>z Claude</em></h1>
+    <p class="sub">Spokojny, poukładany przewodnik po tym, co przerabialiśmy na żywo, z każdym pojęciem wyjaśnionym od zera. Tak, żeby dało się tu wrócić w każdej chwili.</p>
+    <a class="cue" href="#sciezka" aria-label="Przewiń do treści">
+      Zacznij tutaj
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </a>
+  </section>
+
+  <section id="sciezka">
+    <div class="section-head center reveal">
+      <div class="k">Ścieżka nauki</div>
+      <h2>Od czego zacząć</h2>
+      <p class="lead">Cztery miejsca. Sesje przechodzisz po kolei, każda kolejna stoi na poprzedniej. Po resztę sięgasz, kiedy potrzebujesz.</p>
+    </div>
+
+    <div class="bento">
+
+      <a class="tile c3 reveal" href="sesja-1.html">
+        <span class="num" aria-hidden="true">01</span>
+        <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
+        <span class="tag">Sesja pierwsza</span>
+        <h3>Claude, GitHub i skarbiec wiedzy</h3>
+        <p>Podepnij Claude do GitHuba i pracuj na plikach prosto z czatu. Jak myśleć o Claude, jak go ustawić i budować bazę wiedzy firmy.</p>
+        <span class="go">7 modułów <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
 
-      <a class="card reveal d2" href="sesja-2.html">
-        <span class="epno">02</span>
-        <span class="tag">Sesja 2 · gotowa</span>
-        <h3>Strona internetowa</h3>
-        <p>Jak edytować nową stronę prosto z Claude: bezpieczna wersja testowa (staging), połączenie przez serwer, podmiana logo, czcionek i kolorów. Plus złote prompty i zasady w repo.</p>
-        <span class="go">Otwórz notatki <span class="arr">→</span></span>
+      <a class="tile c3 reveal" href="sesja-2.html">
+        <span class="num" aria-hidden="true">02</span>
+        <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="15" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></span>
+        <span class="tag">Sesja druga</span>
+        <h3>Strona internetowa przez Claude</h3>
+        <p>Połącz Claude bezpośrednio z WordPressem i zmieniaj stronę rozmową: logo, czcionki, kolory, układ. Bezpiecznie, na wersji testowej.</p>
+        <span class="go">6 modułów <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
 
-      <a class="card soon reveal d3" href="#">
-        <span class="epno">03</span>
-        <span class="tag">Sesja 3</span>
-        <h3>Maszynka do contentu</h3>
-        <p>Tworzymy skille do robienia contentu i uczymy się aktualizować skarbiec, żeby kolejne outputy były coraz lepsze: żyjący ekosystem.</p>
-        <span class="go muted">Wkrótce</span>
+      <a class="tile c4 row reveal" href="system-contentu.html">
+        <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 14l.9 2.3 2.3.9-2.3.9L18 20.4l-.9-2.3-2.3-.9 2.3-.9z"/></svg></span>
+        <div class="body">
+          <span class="tag">Produkt</span>
+          <h3>System tworzenia contentu</h3>
+          <p>„Maszynka do contentu”: głos marki, filary, szablony i gotowe komendy do postów, karuzel i stories, w Twoim stylu.</p>
+          <span class="go">Zobacz, jak działa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
       </a>
 
-      <a class="card soon reveal d3" href="#">
-        <span class="epno">04</span>
-        <span class="tag">Sesja 4</span>
-        <h3>Marketing i kampanie</h3>
-        <p>Agenci i skille do marketingu oraz budowy i optymalizacji płatnych kampanii. Ruszamy, gdy strona będzie gotowa.</p>
-        <span class="go muted">Wkrótce</span>
+      <a class="tile c2 reveal" href="slowniczek.html">
+        <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v17H6a2 2 0 0 0-2 2z"/><path d="M19 18H6a2 2 0 0 0-2 2"/></svg></span>
+        <span class="tag">Pomoc</span>
+        <h3>Słowniczek</h3>
+        <p>Każde pojęcie wyjaśnione jednym prostym zdaniem. Z wyszukiwarką.</p>
+        <span class="go">Szukaj <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
 
-      <a class="card soon reveal d4" href="#">
-        <span class="epno">05</span>
-        <span class="tag">Sesja 5</span>
-        <h3>Perspektywy AI w firmie</h3>
-        <p>Brainstorm i spisanie kierunków rozwoju AI w firmie, kompetencje jutra i to, czego jeszcze nie poruszyliśmy.</p>
-        <span class="go muted">Wkrótce</span>
-      </a>
     </div>
   </section>
 
-  <!-- STREFA 2: MATERIAŁY I PLIKI -->
-  <section class="group">
-    <div class="group-head reveal">
-      <div class="gh-l">
-        <span class="lab">Materiały i pliki</span>
-        <h2>Stworzone na szkoleniach</h2>
-      </div>
-      <span class="count">2 pozycje</span>
+  <section>
+    <div class="section-head reveal">
+      <div class="k">Instrukcja obsługi</div>
+      <h2>Jak korzystać z tych notatek</h2>
     </div>
-    <div class="cards">
-      <a class="card reveal d1" href="raport-strategia.html">
-        <span class="tag">Dokument strategiczny</span>
-        <h3>Strategia Contentowa</h3>
-        <p>Plan contentowy marki: nisza, głos marki, idealna klientka, filary treści i formaty. Powstał na szkoleniu.</p>
-        <span class="go">Otwórz <span class="arr">→</span></span>
-      </a>
-      <a class="card reveal d2" href="https://joannabrzeska.pl/staging/" target="_blank" rel="noopener">
-        <span class="tag">Strona internetowa</span>
-        <h3>Nowa strona (wersja testowa)</h3>
-        <p>Nowy projekt strony budowany i edytowany z poziomu Claude. Na razie na wersji testowej (staging), przed wdrożeniem na żywo.</p>
-        <span class="go">Zobacz na stagingu <span class="arr">→</span></span>
-      </a>
+    <ol class="steps reveal">
+      <li><strong>Oglądaj po kolei.</strong> Sesja 1 buduje fundament (Claude + skarbiec wiedzy), Sesja 2 stoi na tym fundamencie (strona). System contentu przerabiasz, kiedy chcesz zacząć tworzyć posty.</li>
+      <li><strong>Każdy moduł = jeden filmik.</strong> Najpierw obejrzyj nagranie, potem przejrzyj opis pod nim. To ta sama treść, tylko do czytania i szukania. (Moduł 1 Sesji 1 nie ma wideo, robisz go z gotową instrukcją do pobrania.)</li>
+      <li><strong>Nie znasz słowa?</strong> Pojęcia w tekście są wyróżnione i wyjaśnione na miejscu, a wszystkie zebrane w <a href="slowniczek.html">słowniczku</a> z wyszukiwarką.</li>
+      <li><strong>Wracaj, kiedy potrzebujesz.</strong> Lewy spis modułów podświetla miejsce, w którym jesteś, więc łatwo znaleźć jeden krok bez oglądania całości.</li>
+    </ol>
+
+    <div class="callout tip reveal">
+      <div class="ct"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z"/></svg>Bez stresu</div>
+      <p>Nie musisz niczego umieć na pamięć. Claude prowadzi Cię krok po kroku, a te notatki są po to, żeby przypomnieć „jak to było”. Twoim zadaniem jest rozumieć <em>po co</em> coś robimy, a nie wkuwać komendy.</p>
     </div>
   </section>
 
-  <footer class="reveal">
-    <div class="mark">Alchemia <i>Aesthetic</i></div>
-    <div class="rule"></div>
-    <p>Centrum szkoleniowe · materiały wewnętrzne zespołu</p>
-  </footer>
+</main>
 
-</div>
+<footer>
+  <div class="wrap row">
+    <div>Alchemia Aesthetic · hub szkoleniowy · materiał wewnętrzny</div>
+    <div><a href="#main">↑ Na górę</a></div>
+  </div>
+</footer>
 
-<script>
-  const io=new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
-  },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-</script>
+<script src="app.js"></script>
 </body>
 </html>

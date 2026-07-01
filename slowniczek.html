@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Słowniczek pojęć · Alchemia Aesthetic × Claude</title>
+<meta name="description" content="Każde pojęcie z hubu szkoleniowego (Claude, repo, git, staging, token, skill) wyjaśnione jednym prostym zdaniem. Z wyszukiwarką.">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,330..600;1,9..144,330..600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Przejdź do treści</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="topnav">
+  <div class="wrap row">
+    <a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span>Alchemia <em>Hub</em></a>
+    <nav class="nav-links" aria-label="Główna nawigacja">
+      <a href="index.html">Start</a>
+      <a href="sesja-1.html">Sesja 1</a>
+      <a href="sesja-2.html">Sesja 2</a>
+      <a href="system-contentu.html">System contentu</a>
+      <a href="slowniczek.html">Słowniczek</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="iconbtn theme-toggle" aria-label="Przełącz tryb jasny / ciemny" title="Tryb jasny / ciemny">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></svg>
+      </button>
+      <button class="iconbtn menu-btn" aria-label="Menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+
+  <section class="hero compact">
+    <div class="halo" aria-hidden="true"></div>
+    <div class="eyebrow">Pomoc</div>
+    <h1>Słowniczek <em>pojęć</em></h1>
+    <p class="sub">Każde słowo, które pada w hubie, wyjaśnione krótko i po ludzku. Nie znasz terminu? Wpisz go niżej.</p>
+  </section>
+
+  <div class="gloss-tools">
+    <label class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+      <input id="gloss-search" type="search" placeholder="Szukaj pojęcia… (np. push, staging, token)" aria-label="Szukaj pojęcia">
+    </label>
+    <nav class="alpha" aria-label="Skok do litery">
+      <a href="#l-a">A</a><a href="#l-b">B</a><a href="#l-c">C</a><a href="#l-d">D</a>
+      <a href="#l-f">F</a><a href="#l-g">G</a><a href="#l-h">H</a><a href="#l-i">I</a>
+      <a href="#l-l">L</a><a href="#l-m">M</a><a href="#l-n">N</a><a href="#l-o">O</a>
+      <a href="#l-p">P</a><a href="#l-r">R</a><a href="#l-s">S</a><a href="#l-t">T</a><a href="#l-w">W</a>
+    </nav>
+  </div>
+
+  <div class="gloss">
+
+    <h3 class="letter" id="l-a">A</h3>
+    <div class="entry" id="g-agent"><dl><dt>Agent</dt><dd>Zestaw <a href="#g-skill">skilli</a> wykonywanych jeden po drugim, „robotyczny asystent” do większego, wieloetapowego zadania.</dd></dl></div>
+    <div class="entry" id="g-app"><dl><dt>App Password <span class="pl">hasło aplikacji</span></dt><dd>Patrz: <a href="#g-haslo">Hasło aplikacji</a>.</dd></dl></div>
+
+    <h3 class="letter" id="l-b">B</h3>
+    <div class="entry" id="g-voice"><dl><dt>Brand voice <span class="pl">głos marki</span></dt><dd>Dokument opisujący, kim jest marka, co oferuje i jakim językiem mówi. Na jego podstawie Claude pisze content „Waszym głosem”.<span class="see">Zobacz: <a href="system-contentu.html#m1">System contentu</a></span></dd></dl></div>
+
+    <h3 class="letter" id="l-c">C</h3>
+    <div class="entry" id="g-cache"><dl><dt>Cache <span class="pl">pamięć podręczna</span></dt><dd>Zapamiętana przez przeglądarkę starsza wersja strony. Po zmianie odśwież z jej pominięciem: <code>Ctrl/Cmd + Shift + R</code>.</dd></dl></div>
+    <div class="entry" id="g-checklist"><dl><dt>Checklist publikacji</dt><dd>Krótka lista kontrolna przed wrzuceniem treści (czy jest CTA, czy ton się zgadza, czy liczby są prawdziwe).</dd></dl></div>
+    <div class="entry" id="g-claude"><dl><dt>Claude</dt><dd>Asystent AI, z którym pracujesz: pisze, analizuje, zmienia stronę i pliki.</dd></dl></div>
+    <div class="entry" id="g-code"><dl><dt>Claude Code</dt><dd>Tryb Claude, który pracuje na plikach i łączy się z <a href="#g-github">GitHubem</a> oraz stroną. Tu spędzasz najwięcej czasu.</dd></dl></div>
+    <div class="entry" id="g-claudemd"><dl><dt>CLAUDE.md</dt><dd>Plik z odgórnymi instrukcjami w <a href="#g-repo">repo</a>. Zapisujesz w nim zasady, których Claude trzyma się zawsze.<span class="see">Zobacz: <a href="sesja-1.html#m6">Sesja 1 · Moduł 6</a></span></dd></dl></div>
+    <div class="entry" id="g-commit"><dl><dt>Commit</dt><dd>Zapisana paczka zmian z krótkim opisem, co się zmieniło. Pierwszy krok wysłania pracy do skarbca.<span class="see">Zobacz też: <a href="#g-push">Push</a></span></dd></dl></div>
+    <div class="entry" id="g-cowork"><dl><dt>Cowork</dt><dd><a href="#g-tryby">Tryb</a>, w którym wpuszczasz Claude na swój komputer (np. by uporządkował maila czy dysk).</dd></dl></div>
+    <div class="entry" id="g-cta"><dl><dt>CTA <span class="pl">wezwanie do działania</span></dt><dd>Zdanie mówiące odbiorcy, co ma teraz zrobić, np. „napisz do nas” albo „wybierz termin w Booksy”.</dd></dl></div>
+
+    <h3 class="letter" id="l-d">D</h3>
+    <div class="entry" id="g-deploy"><dl><dt>Deploy <span class="pl">wdrożenie</span></dt><dd>Wysłanie zmian na <a href="#g-serwer">serwer</a>, żeby pojawiły się na stronie. Claude robi to komendą: całość albo wybrany element.<span class="see">Zobacz: <a href="sesja-2.html#m5">Sesja 2 · Moduł 5</a></span></dd></dl></div>
+
+    <h3 class="letter" id="l-f">F</h3>
+    <div class="entry" id="g-filar"><dl><dt>Filar contentowy</dt><dd>Stały temat, wokół którego kręci się część treści (np. edukacja, „przed/po”, kulisy). Ustala się też proporcje między filarami.</dd></dl></div>
+    <div class="entry" id="g-format"><dl><dt>Format</dt><dd>Rodzaj treści: post statyczny, karuzela, reel, stories. Każdy ma swój sprawdzony szablon.</dd></dl></div>
+    <div class="entry" id="g-ftp"><dl><dt>FTP</dt><dd>Sposób połączenia z <a href="#g-serwer">serwerem</a>, który pozwala wgrywać i pobierać pliki strony. To przez niego Claude wypycha zmiany na stronę.</dd></dl></div>
+
+    <h3 class="letter" id="l-g">G</h3>
+    <div class="entry" id="g-git"><dl><dt>Git</dt><dd>„Bramka” między Twoim komputerem a <a href="#g-github">GitHubem</a>. Przekazuje pliki w obie strony. Instalujesz raz.</dd></dl></div>
+    <div class="entry" id="g-github"><dl><dt>GitHub</dt><dd>Bezpieczne miejsce w chmurze, gdzie trzymamy pliki firmy, „firmowy skarbiec”. W środku dzieli się na <a href="#g-repo">repozytoria</a>.<span class="see">Zobacz: <a href="sesja-1.html#m1">Sesja 1 · Moduł 1</a></span></dd></dl></div>
+    <div class="entry" id="g-golive"><dl><dt>Go-live</dt><dd>Publikacja gotowej strony na żywej domenie. Robimy ją ostrożnie i wspólnie. To osobny, zaplanowany krok.</dd></dl></div>
+
+    <h3 class="letter" id="l-h">H</h3>
+    <div class="entry" id="g-halucynacja"><dl><dt>Halucynacja</dt><dd>Sytuacja, gdy AI poda coś pewnym tonem, ale to nieprawda (np. zmyśli liczbę). Twarde dane zawsze sprawdzaj u źródła.</dd></dl></div>
+    <div class="entry" id="g-haslo"><dl><dt>Hasło aplikacji <span class="pl">App Password</span></dt><dd>Specjalne hasło łączące program (Claude) z <a href="#g-wordpress">WordPressem</a>, inne niż zwykłe hasło do logowania. Tworzysz je w panelu, można je w każdej chwili cofnąć.</dd></dl></div>
+
+    <h3 class="letter" id="l-i">I</h3>
+    <div class="entry" id="g-klientka"><dl><dt>Idealna klientka <span class="pl">persona</span></dt><dd>Opis osoby, do której mówicie: czego szuka, czego się obawia, co ją przekonuje. Dzięki niej treści trafiają do konkretnej osoby.</dd></dl></div>
+
+    <h3 class="letter" id="l-l">L</h3>
+    <div class="entry" id="g-layout"><dl><dt>Layout</dt><dd>Rozmieszczenie sekcji i materiałów na stronie: co jest gdzie i jak duże.</dd></dl></div>
+    <div class="entry" id="g-live"><dl><dt>Live</dt><dd>Wersja strony, którą widzą klienci, ta pod normalnym adresem. Przeciwieństwo: <a href="#g-staging">staging</a>.</dd></dl></div>
+
+    <h3 class="letter" id="l-m">M</h3>
+    <div class="entry" id="g-model"><dl><dt>Model</dt><dd>„Wersja mózgu” Claude. Lżejszy jest tańszy i szybszy (do prostych rzeczy), mocniejszy jest mądrzejszy (do strony, kreatywnych zadań).</dd></dl></div>
+
+    <h3 class="letter" id="l-n">N</h3>
+    <div class="entry" id="g-nisza"><dl><dt>Nisza</dt><dd>Obszar, w którym marka się specjalizuje i wyróżnia. Pomaga mówić „o swoim” zamiast konkurować ze wszystkimi.</dd></dl></div>
+
+    <h3 class="letter" id="l-o">O</h3>
+    <div class="entry" id="g-okno"><dl><dt>Okno kontekstowe</dt><dd>Ilość informacji, którą Claude trzyma „w głowie” w trakcie jednej rozmowy. Duże okno = nie gubi się w długich tematach.</dd></dl></div>
+
+    <h3 class="letter" id="l-p">P</h3>
+    <div class="entry" id="g-prompt"><dl><dt>Prompt</dt><dd>Twoje polecenie, czyli to, co wpisujesz Claude.</dd></dl></div>
+    <div class="entry" id="g-push"><dl><dt>Push</dt><dd>„Wypchnięcie” <a href="#g-commit">commita</a> na <a href="#g-github">GitHuba</a>, czyli wysłanie zmian do skarbca w chmurze.</dd></dl></div>
+
+    <h3 class="letter" id="l-r">R</h3>
+    <div class="entry" id="g-repo"><dl><dt>Repo <span class="pl">repozytorium</span></dt><dd>Folder wewnątrz <a href="#g-github">GitHuba</a>. Jedna szuflada skarbca (np. osobna na content, osobna na stronę).</dd></dl></div>
+    <div class="entry" id="g-rest"><dl><dt>REST API</dt><dd>Sposób, w jaki programy „rozmawiają” z <a href="#g-wordpress">WordPressem</a>. Używa <a href="#g-haslo">hasła aplikacji</a>.</dd></dl></div>
+
+    <h3 class="letter" id="l-s">S</h3>
+    <div class="entry" id="g-serwer"><dl><dt>Serwer</dt><dd>„Gniazdo”, na którym mieszka strona: komputer w internecie z jej plikami, serwujący ją odwiedzającym.</dd></dl></div>
+    <div class="entry" id="g-sesja"><dl><dt>Sesja</dt><dd>Jedna rozmowa z Claude, od otwarcia czatu do jego zamknięcia.</dd></dl></div>
+    <div class="entry" id="g-skill"><dl><dt>Skill <span class="pl">umiejętność</span></dt><dd>Zapisany, powtarzalny sposób na jedno zadanie. Wywołujesz go ukośnikiem <code>/</code>. Kilka skilli razem to <a href="#g-agent">agent</a>.<span class="see">Zobacz: <a href="sesja-1.html#m7">Sesja 1 · Moduł 7</a></span></dd></dl></div>
+    <div class="entry" id="g-clone"><dl><dt>Sklonowanie <span class="pl">clone</span></dt><dd>Pobranie <a href="#g-repo">repo</a> z GitHuba na komputer, żeby mieć pliki „pod ręką”.</dd></dl></div>
+    <div class="entry" id="g-staging"><dl><dt>Staging</dt><dd>Kopia testowa strony („piaskownica”), zwykle pod adresem z dopiskiem <code>/staging</code>. Tu zmieniamy wszystko bez ruszania wersji <a href="#g-live">live</a>.<span class="see">Zobacz: <a href="sesja-2.html#m2">Sesja 2 · Moduł 2</a></span></dd></dl></div>
+
+    <h3 class="letter" id="l-t">T</h3>
+    <div class="entry" id="g-terminal"><dl><dt>Terminal</dt><dd>Okno z komendami. Brzmi groźnie, ale nie musisz w nim nic wymyślać. Claude prowadzi Cię krok po kroku.</dd></dl></div>
+    <div class="entry" id="g-token"><dl><dt>Token <span class="pl">żeton</span></dt><dd>Jednostka „paliwa”, którą Claude „płaci” za myślenie. Każde zadanie spala tokeny; mocniejszy <a href="#g-model">model</a> spala ich więcej.</dd></dl></div>
+    <div class="entry" id="g-tryby"><dl><dt>Tryby: Chat / Cowork / Code</dt><dd><strong>Chat</strong>: zwykła rozmowa; <strong><a href="#g-cowork">Cowork</a></strong>: Claude na Twoim komputerze; <strong><a href="#g-code">Code</a></strong>: pełna moc (pliki, GitHub, strona).</dd></dl></div>
+
+    <h3 class="letter" id="l-w">W</h3>
+    <div class="entry" id="g-woo"><dl><dt>WooCommerce</dt><dd>Sklep internetowy wbudowany w <a href="#g-wordpress">WordPress</a>: to w nim są produkty, zamówienia i płatności.</dd></dl></div>
+    <div class="entry" id="g-wordpress"><dl><dt>WordPress</dt><dd>System, na którym stoi Twoja strona: podstrony, sklep i treści. Zarządza się nim przez panel (<code>/wp-admin</code>).</dd></dl></div>
+
+    <p class="noresult">Brak pojęcia dla tej frazy. Spróbuj krótszego słowa albo sprawdź pisownię.</p>
+  </div>
+
+  <nav class="pager" aria-label="Nawigacja między stronami">
+    <a class="prev" href="system-contentu.html"><span class="dir">← Wróć</span><span class="ptt">System tworzenia contentu</span></a>
+    <a class="next" href="index.html"><span class="dir">Start →</span><span class="ptt">Strona główna</span></a>
+  </nav>
+
+</main>
+
+<footer>
+  <div class="wrap row">
+    <div>Alchemia Aesthetic · hub szkoleniowy · Słowniczek</div>
+    <div><a href="#main">↑ Na górę</a></div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
