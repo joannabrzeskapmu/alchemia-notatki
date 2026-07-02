@@ -1,6 +1,6 @@
 /* ============================================================
    Alchemia Aesthetic · Hub szkoleniowy
-   System designu (light + dark), editorial-luxe + course UX
+   System designu (light), editorial-luxe + course UX
    ============================================================ */
 
 /* ---------- tokens ---------- */
@@ -36,32 +36,6 @@
   --spring:cubic-bezier(.34,1.32,.5,1);
   --maxw:1180px;--measure:67ch;
   --nav-h:64px;
-}
-
-html[data-theme="dark"]{
-  --bg:#181310;
-  --bg-tint:#211a14;
-  --surface:#221a14;
-  --surface-2:#2b2118;
-  --ink:#f3ebdf;
-  --ink-soft:#c6b6a4;
-  --ink-mute:#988877;
-  --accent:#e0bb83;        /* jaśniejsze złoto dla kontrastu na ciemnym */
-  --accent-deep:#ecca96;
-  --gold:#d9b675;
-  --gold-lum:#ecca96;
-  --rose:#e0a89f;
-  --line:rgba(231,212,182,.13);
-  --line-2:rgba(231,212,182,.24);
-  --ok:#86b890;
-  --warn:#e0986e;
-  --halo-a:rgba(201,168,124,.30);
-  --halo-b:rgba(205,154,145,.22);
-  --code-bg:#0f0c0a;
-  --code-ink:#ece1d2;
-  --shadow-sm:0 2px 10px -4px rgba(0,0,0,.6);
-  --shadow:0 22px 54px -28px rgba(0,0,0,.7);
-  --shadow-lg:0 50px 100px -50px rgba(0,0,0,.85);
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -109,9 +83,6 @@ a{color:var(--accent-deep);text-underline-offset:3px;text-decoration-thickness:1
   color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:transform .25s var(--spring),border-color .25s;flex:none;}
 .iconbtn:hover{transform:translateY(-1px);border-color:var(--accent);}
 .iconbtn svg{width:18px;height:18px;}
-.theme-toggle .sun{display:none;}
-html[data-theme="dark"] .theme-toggle .sun{display:block;}
-html[data-theme="dark"] .theme-toggle .moon{display:none;}
 .menu-btn{display:none;}
 .nav-actions{display:flex;align-items:center;gap:10px;}
 @media(max-width:760px){

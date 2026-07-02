@@ -1,25 +1,6 @@
 // Alchemia Aesthetic · hub szkoleniowy. Zero zależności.
 (function () {
-  var root = document.documentElement;
-
-  /* ---- 1) Motyw jasny/ciemny (zapamiętany + systemowy) ---- */
-  try {
-    var saved = localStorage.getItem('alchemia-theme');
-    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    root.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
-  } catch (e) { root.setAttribute('data-theme', 'light'); }
-
-  function bindTheme() {
-    var btn = document.querySelector('.theme-toggle');
-    if (!btn) return;
-    btn.addEventListener('click', function () {
-      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      try { localStorage.setItem('alchemia-theme', next); } catch (e) {}
-    });
-  }
-
-  /* ---- 2) Mobilne menu ---- */
+  /* ---- 1) Mobilne menu ---- */
   function bindMenu() {
     var btn = document.querySelector('.menu-btn');
     var links = document.querySelector('.nav-links');
@@ -135,7 +116,7 @@
   }
 
   function init() {
-    bindTheme(); bindMenu(); markActiveNav(); bindProgress();
+    bindMenu(); markActiveNav(); bindProgress();
     bindScrollSpy(); bindReveal(); bindCopy(); bindGlossSearch();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

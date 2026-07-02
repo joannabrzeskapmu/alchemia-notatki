@@ -32,15 +32,38 @@ ma do nich login).
 5. **Ton:** spokojny, ciepły, zachęcający. Błąd = „spokojnie, to normalne, naprawiamy".
 6. **Sekrety nigdy nie wchodzą do gita.** Pliki z hasłami (`dane-staging.txt`, `ftp-staging.txt`) są w `.gitignore`. Potwierdź to komendą `git check-ignore`. Nie commituj ich nigdy.
 7. **Tylko staging.** Wszystko robimy na wersji testowej. Produkcji (żywej strony) w tym przewodniku NIE dotykamy.
+8. **Zrzuty ekranu to Twój główny sposób debugowania.** Użytkownik porusza się po panelach, których
+   nie zna (wp-admin, panel hostingu). Gdy nie wie, gdzie kliknąć, nie może czegoś znaleźć, albo widzi
+   komunikat błędu, **poproś o zrzut ekranu** i naprowadź na jego podstawie. To Ty rozwiązujesz problem.
+9. **Prowadź dokładnie „gdzie kliknąć" i zachęcaj do mówienia.** Zamiast ogólników podawaj konkretną
+   ścieżkę („w menu po lewej kliknij X, potem Y, zjedź na sam dół"). Powtarzaj, że jak nie wie, gdzie
+   coś jest, ma po prostu powiedzieć albo wysłać zrzut, żadne pytanie nie jest głupie.
 
 ---
 
 ### 🪜 Przebieg krok po kroku
 
-**Krok 0: Przywitanie i ustalenie startu.**
-Przywitaj się, wyjaśnij w 2 zdaniach cel („żebyś mogła kazać mi zmieniać stronę zwykłą rozmową,
-i treści, i wygląd, a wszystko bezpiecznie na wersji testowej"). Upewnij się, że skarbiec jest
-już na komputerze (folder `skarbiec`). Wejdź do `strona-internetowa/tools/`.
+**Krok 0 (Twój PIERWSZY komunikat): rozpisz użytkownikowi cały plan po ludzku.**
+Zanim zrobisz cokolwiek technicznego, Twój pierwszy komunikat to przyjazne, nietechniczne
+streszczenie całego procesu. To zastępuje dawną „wersję do czytania": tworzysz ją na żywo, a
+użytkownik nie dostaje osobnego pliku. Zawrzyj w niej:
+1. **Ciepłe przywitanie i po co to**: „połączę się z Twoją stroną testową tak, żebyś mogła kazać
+   mi zmieniać i treści, i wygląd zwykłą rozmową, bez klikania w panelu".
+2. **Jak to działa w jednym zdaniu**: do strony prowadzą **dwie osobne bramki**, jedna do treści
+   (posty, strony, produkty), druga do wyglądu (kolory, czcionki, układ). Ustawimy obie.
+3. **Co razem zrobimy**, prostą listą: przygotuję pliki na hasła, poprosisz WordPressa o „hasło
+   aplikacji" i mi je podasz, zdobędziesz lub zresetujesz hasło FTP w panelu hostingu, przetestuję
+   obie bramki, a na koniec (za Twoją zgodą) zrobimy drobną zmianę na próbę.
+4. **Czego będę potrzebować od Ciebie** (i tylko tego): **dostęp do wp-admin stagingu** oraz
+   **dostęp do panelu hostingu** (po hasło FTP). Hasła podajesz Ty, bo tylko Ty masz do nich login;
+   zostają na Twoim komputerze, nigdy w repo.
+5. **Warunek wstępny**: jestem już połączony z GitHubem, a skarbiec jest na komputerze (jeśli nie,
+   najpierw robimy tamtą instrukcję). Pythona 3 sprawdzę sam.
+6. **Ile zajmie** (~10-15 minut) i uspokojenie: „pracujemy tylko na wersji testowej, żywej strony
+   nie ruszamy; jeśli coś nie zadziała, spokojnie, naprawimy to razem. Jak nie wiesz, gdzie coś
+   znaleźć w panelu, wyślij mi zrzut ekranu, a ja Ci wskażę, w co kliknąć".
+7. **Zakończ pytaniem**: „Gotowa? Zaczynamy.". Poczekaj na odpowiedź, potem wejdź do
+   `strona-internetowa/tools/` i przejdź do Kroku 1. Obowiązuje „jeden krok naraz".
 
 **Krok 1: Utwórz lokalne pliki konfiguracyjne z szablonów.**
 W `strona-internetowa/tools/` uruchom:
@@ -56,12 +79,18 @@ Oba nazwy powinny się wypisać = ✅ ignorowane. Wyjaśnij: „kopiujemy wzór;
 zostaje tylko na Twoim komputerze".
 
 **Krok 2: Kanał TREŚCI (REST): hasło aplikacji ze stagingu.**
-To daje edycję postów/stron/produktów. Poproś użytkownika, żeby:
-1. wszedł na `…/staging/wp-admin` → **Użytkownicy → Profil**,
-2. zjechał do **„Hasła aplikacji"**, wpisał nazwę np. `claude-staging` → **Dodaj**,
-3. **skopiował hasło od razu** (WordPress pokazuje je tylko raz; wygląda jak `abcd EFGH 1234 …`).
-Poproś o dwie rzeczy: **login administratora** stagingu i to **hasło aplikacji**.
-Wpisz je do `dane-staging.txt` (pola `WP_LOGIN` i `WP_HASLO_APLIKACJI`; `WP_URL` jest już ustawiony na `.../staging`; spacje w haśle są OK).
+To daje edycję postów/stron/produktów. Poprowadź użytkownika dokładnie, krok po kroku (jak się
+zgubi, poproś o zrzut ekranu i wskaż palcem):
+1. Otwórz w przeglądarce adres stagingu z końcówką `/wp-admin` i zaloguj się (ten sam login, co do
+   panelu WordPressa).
+2. W menu **po lewej** najedź na **Użytkownicy** i wejdź w **Profil** (bywa „Twój profil").
+3. Na stronie profilu **zjedź na sam dół** do sekcji **„Hasła aplikacji"** (ang. „Application Passwords").
+4. W polu nazwy wpisz np. `claude-staging` i kliknij **„Dodaj nowe hasło aplikacji"**.
+5. WordPress pokaże hasło **tylko raz** (wygląda jak `abcd EFGH 1234 wxyz`). Niech **skopiuje je od
+   razu** i wklei Tobie w czat. Jeśli zamknie okno bez kopiowania, nic się nie stanie: powtórzcie
+   punkty 4-5 i utwórzcie nowe.
+Poproś jeszcze o **login administratora** stagingu (dokładnie taki, jakim się loguje; bywa z `@`).
+Wpisz oba do `dane-staging.txt` (`WP_LOGIN`, `WP_HASLO_APLIKACJI`; `WP_URL` jest już ustawiony na `.../staging`; spacje w haśle są OK).
 Przetestuj (bezpiecznie, tylko czyta):
 ```
 python al_test_polaczenia.py dane-staging.txt
@@ -69,10 +98,18 @@ python al_test_polaczenia.py dane-staging.txt
 Sukces = `[1] HTTP 200`, `[2] Uwierzytelnienie: OK`, `[3] Prawa zapisu: OK` + liczby stron/wpisów/produktów.
 Pochwal i wyjaśnij, co widać.
 
-**Krok 3: Kanał WYGLĄDU (FTP): hasło z panelu hostingu.**
-To daje wgrywanie motywu (PHP/CSS). Dane FTP = te same co do DirectAdmin/panelu hostingu.
-Poproś użytkownika o **hasło FTP** (jeśli nie zna: panel hostingu → serwer → *Resetuj hasło* → nowe przyjdzie mailem).
-Uzupełnij `ftp-staging.txt`: `FTP_HOST`, `FTP_USER`, `FTP_PASS` (host i user zwykle = nazwa serwera, np. `srvXXXXX` / `srvXXXXX.seohost.com.pl`; port 21; `FTP_TLS=1`; `REMOTE_THEME` zostaw).
+**Krok 3: Kanał WYGLĄDU (FTP): dane z panelu hostingu.**
+To daje wgrywanie motywu (PHP/CSS). Dane FTP to te same, co logowanie do panelu hostingu
+(DirectAdmin). **Nie zgaduj nazwy serwera**, poproś użytkownika, żeby ją odczytała z panelu:
+1. Niech zaloguje się do panelu hostingu (DirectAdmin). Jak nie wie gdzie, poproś o zrzut ekranu
+   maila powitalnego od hostingu albo strony logowania i naprowadź.
+2. Poproś o **nazwę serwera** (format `srvXXXXX.nazwahostingu.pl`) i **login** (często ta sama
+   nazwa serwera). Jak nie wie, gdzie to jest w panelu, poproś o zrzut ekranu, wskażesz.
+3. **Hasło FTP** = hasło do konta hostingu. Jeśli go nie zna, w panelu jest zmiana hasła (całego
+   konta albo w sekcji **„Konta FTP / FTP Management"**). Nie znajdzie? Zrzut ekranu panelu i
+   naprowadź; w ostateczności *Resetuj hasło*, nowe przyjdzie mailem.
+Uzupełnij `ftp-staging.txt`: `FTP_HOST` i `FTP_USER` (nazwa serwera / login z panelu), `FTP_PASS`
+(hasło), a `FTP_PORT=21`, `FTP_TLS=1`, `REMOTE_THEME` zostaw bez zmian.
 Przetestuj (tylko listuje, nic nie wgrywa):
 ```
 python al_sync.py explore
@@ -117,5 +154,5 @@ Złota zasada: **eksperymentujemy na stagingu; go-live robimy wspólnie, osobno.
 
 ---
 
-*Wersja „do czytania" tego samego procesu jest w pliku `KONFIGURACJA-WORDPRESS.md`.
-Pełna dokumentacja techniczna: `strona-internetowa/docs/08-podpiac-claude-do-wordpressa.md`.*
+*Pełna dokumentacja techniczna (dla nas, nie dla użytkownika):
+`strona-internetowa/docs/08-podpiac-claude-do-wordpressa.md`.*

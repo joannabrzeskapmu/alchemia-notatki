@@ -23,16 +23,19 @@ nagrań (każdy moduł = jeden filmik), z **placeholderami na wideo** do podmian
 
 ## Pliki do pobrania (`pliki/`)
 
-Moduł 1 Sesji 1 nie jest nagraniem. Zamiast tego użytkownik pobiera gotową instrukcję i
-wrzuca ją do Claude. Pliki linkowane ze strony przyciskami „⬇ Pobierz":
+Moduł 1 Sesji 1 (GitHub) i Moduł 1 Sesji 2 (WordPress) nie są nagraniami. Zamiast tego
+użytkownik pobiera gotową instrukcję i wrzuca ją do Claude, pisząc „przeprowadź mnie przez to".
+Pliki linkowane ze strony przyciskami „⬇ Pobierz":
 
 | Plik | Rola |
 |------|------|
-| `KONFIGURACJA-CLAUDE-CODE-prowadzona.md` | **Główny**: instrukcja „dla Claude" (wrzucasz do czatu, piszesz „przeprowadź mnie przez to", Claude prowadzi krok po kroku). |
-| `KONFIGURACJA-CLAUDE-CODE.md` | Wersja „do czytania" tego samego procesu (dla kogoś, kto woli przejść sam). |
+| `KONFIGURACJA-CLAUDE-CODE-prowadzona.md` | Sesja 1: podłączenie Claude do GitHuba. Instrukcja „dla Claude", który prowadzi użytkownika krok po kroku. Jej pierwszy komunikat to rozpisanie całego planu po ludzku. |
+| `KONFIGURACJA-WORDPRESS-prowadzona.md` | Sesja 2: podłączenie Claude do WordPressa (REST + FTP). Analogicznie: Claude prowadzi, zaczyna od rozpisania planu. |
 
-> Oba pliki to kopie tych z korzenia skarbca, trzymane też tutaj, żeby działały jako
-> pobieranie ze strony (ścieżki względne). Gdy zmienisz oryginał w korzeniu, zaktualizuj kopie.
+> Zrezygnowaliśmy z osobnych „wersji do czytania": nikt ich realnie nie czytał, a ich rolę
+> przejął pierwszy komunikat Claude'a (rozpisuje cały proces zanim zacznie). Plik GitHub ma też
+> kopię w korzeniu skarbca (`KONFIGURACJA-CLAUDE-CODE-prowadzona.md`) trzymaną w synchronizacji;
+> plik WordPress żyje tylko tutaj. Zmieniasz jeden, zaktualizuj drugi.
 
 ## Konwencja
 
