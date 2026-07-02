@@ -1,7 +1,11 @@
 # 🧭 Prowadzona konfiguracja Claude Code: wrzuć mnie do czatu
 
 > **Dla użytkownika:** nie musisz nic z tego pliku rozumieć ani wykonywać samodzielnie.
-> Po prostu wrzuć ten plik (albo wklej jego treść) do Claude Code i napisz:
+> Ten plik wrzucasz do **Claude Code**, czyli aplikacji Claude **zainstalowanej na Twoim
+> komputerze**, która potrafi pracować z Twoimi plikami i wykonywać rzeczy za Ciebie. To **nie**
+> jest zwykły czat w przeglądarce (jak ChatGPT albo Claude na stronie), bo tamten nie ma dostępu
+> do Twojego komputera. Jeśli nie masz jeszcze Claude Code, najpierw zainstaluj go z
+> claude.ai/download. Potem otwórz Claude Code, wrzuć ten plik (albo wklej jego treść) i napisz:
 > **„Przeprowadź mnie przez to"**. Claude zajmie się resztą i poprowadzi Cię krok po kroku.
 
 ---
@@ -37,6 +41,10 @@ GitHub", a Ty robisz commit i push.
    ustawienia"), tylko konkretnie („kliknij X w prawym górnym rogu, potem Y"). Powtarzaj, że jak
    nie wie, gdzie coś jest, ma po prostu powiedzieć albo wysłać zrzut, żadne pytanie nie jest głupie.
    Nie idź dalej, dopóki nie masz pewności, że krok naprawdę wyszedł.
+10. **Upewnij się, że jesteś Claude Code.** Jeśli nie masz dostępu do terminala i plików (bo user
+    wrzucił ten plik do zwykłego czatu w przeglądarce, np. ChatGPT albo Claude na stronie),
+    powiedz jej łagodnie, że ten proces wymaga aplikacji Claude Code (do pobrania z
+    claude.ai/download), i pomóż jej ją zainstalować oraz otworzyć, zanim ruszycie dalej.
 
 ---
 
@@ -49,8 +57,8 @@ osobno, tworzysz ją na żywo. Zawrzyj w niej:
 1. **Ciepłe przywitanie i po co to robimy**: „ustawimy Twój komputer tak, że wystarczy, że powiesz
    mi »wrzuć na GitHub«, a całą resztą zajmę się ja, bez dotykania żadnych komend".
 2. **Co razem zrobimy**, prostą ponumerowaną listą bez żargonu: sprawdzę i w razie potrzeby
-   zainstaluję dwa małe programy, zaloguję Cię do GitHuba w przeglądarce, ściągnę skarbiec na Twój
-   komputer, zrobimy krótki test że wszystko działa.
+   zainstaluję dwa małe programy, zaloguję Cię do GitHuba w przeglądarce, zrobię na Twoim
+   komputerze folder na naszą pracę i ściągnę do niego skarbiec, zrobimy krótki test że wszystko działa.
 3. **Czego będę potrzebować od Ciebie** (i tylko tego): raz zalogujesz się na GitHubie w
    przeglądarce. Konto już istnieje i jest aktywne (**joannabrzeskapmu**), więc tylko się na nie
    logujesz, nic nie zakładasz. Poza tym klikam i piszę ja.
@@ -95,17 +103,22 @@ Po sukcesie wyjaśnij: „Od teraz komputer pamięta dostęp, nie trzeba tego po
 > Na Macu odpowiednikiem jest `git config --global credential.helper osxkeychain`.
 > Potem ponów `gh auth login`.
 
-**Krok 4: Pobierz skarbiec na komputer (clone).**
-Ustal z użytkownikiem folder (domyślnie katalog domowy). Uruchom:
+**Krok 4: Zrób roboczy folder i pobierz do niego skarbiec (clone).**
+Najpierw ustal miejsce na pracę, żeby wszystko było w jednym, łatwym do znalezienia miejscu (to
+ważne zwłaszcza dla kogoś, kto zna tylko czat w przeglądarce i nie myśli w kategoriach „folderu
+projektu"). Zaproponuj utworzenie dedykowanego folderu, np. `Alchemia` w katalogu domowym, utwórz
+go sam (`mkdir`) i wejdź do niego. Wyjaśnij po ludzku: „Robię na Twoim komputerze folder na naszą
+pracę, jak nową teczkę na biurku". Potem ściągnij do niego skarbca:
 `git clone https://github.com/joannabrzeskapmu/skarbiec.git`
-Wyjaśnij: „Właśnie ściągnęłam kopię całego skarbca na Twój komputer, to jest to samo, co na
-GitHubie, tylko lokalnie". Jeśli zapyta o login / pojawi się „could not read Username" → repo
+Wyjaśnij: „Właśnie ściągnęłam kopię całego skarbca do tej teczki, to jest to samo, co na GitHubie,
+tylko teraz lokalnie u Ciebie". Jeśli zapyta o login / pojawi się „could not read Username" → repo
 jest prywatne, wróć do Kroku 3 (logowanie).
 
-**Krok 5: Otwórz folder w Claude Code.**
-Pokaż, jak uruchomić Claude Code **w folderze `skarbiec`** (albo wskazać mu ten folder).
-Potwierdź, że widzisz pliki, np. wymień kilka (`CLAUDE.md`, `strona-internetowa/`,
-`hub-szkoleniowy/`...). Powiedz: „Teraz widzę wszystkie Twoje pliki i mogę je edytować".
+**Krok 5: Upewnij się, że pracujemy wewnątrz folderu `skarbiec`.**
+Nie każ jej „uruchamiać Claude Code", bo już w nim jesteście. Zamiast tego sam sprawdź, gdzie
+jesteś, i w razie potrzeby wejdź do świeżo sklonowanego folderu `skarbiec`. Potwierdź, że widzisz
+jego zawartość, wymieniając kilka pozycji (`CLAUDE.md`, `strona-internetowa/`, `hub-szkoleniowy/`...).
+Powiedz: „Pracuję teraz w Twoim skarbcu i widzę wszystkie pliki, mogę je czytać i zmieniać".
 
 **Krok 6: Test na żywo (za zgodą).**
 Zaproponuj mały test, żeby pokazać, że całość działa: utwórz drobny plik testowy lub dopisz
