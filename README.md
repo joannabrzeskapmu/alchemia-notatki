@@ -54,4 +54,4 @@ a potem `http://localhost:5281`.
 
 ## Do zrobienia
 
-- [ ] Podmienić placeholdery `.video` na osadzone nagrania w pozostałych modułach (Moduł 1 Sesji 1 już bez wideo).
+- [ ] Wszystkie sloty wideo to teraz **nieodtwarzalne placeholdery** `.video` (brak iframe, nic się nie włącza). Gdy nagranie jest gotowe: podmień dany `<div class="video">...</div>` na osadzenie `<div class="embed"><iframe ...></iframe></div>` (styl `.embed` jest w `styles.css`). Moduł 1 Sesji 1 pozostaje bez wideo.
