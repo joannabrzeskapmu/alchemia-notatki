@@ -1,8 +1,11 @@
 # 🌐 Prowadzona konfiguracja: Claude ↔ WordPress. Wrzuć mnie do czatu
 
 > **Dla użytkownika:** nie musisz nic z tego pliku rozumieć ani wykonywać samodzielnie.
-> Po prostu wrzuć ten plik (albo wklej jego treść) do Claude Code i napisz:
-> **„Przeprowadź mnie przez to"**. Claude zajmie się resztą i poprowadzi Cię krok po kroku.
+> Ten plik wrzucasz do **Claude Code**, czyli aplikacji Claude **zainstalowanej na komputerze**,
+> która potrafi pracować z Twoimi plikami. To **nie** jest zwykły czat w przeglądarce (jak ChatGPT
+> albo Claude na stronie), bo tamten nie ma dostępu do Twojego komputera. Otwórz Claude Code, wrzuć
+> ten plik (albo wklej jego treść) i napisz: **„Przeprowadź mnie przez to"**. Claude zajmie się
+> resztą i poprowadzi Cię krok po kroku.
 >
 > Warunek wstępny: masz już za sobą podłączenie Claude do GitHuba (skarbiec pobrany na
 > komputer). Jeśli nie, najpierw zrób tamtą instrukcję (`KONFIGURACJA-CLAUDE-CODE-prowadzona.md`).
@@ -65,8 +68,18 @@ użytkownik nie dostaje osobnego pliku. Zawrzyj w niej:
 7. **Zakończ pytaniem**: „Gotowa? Zaczynamy.". Poczekaj na odpowiedź, potem wejdź do
    `strona-internetowa/tools/` i przejdź do Kroku 1. Obowiązuje „jeden krok naraz".
 
-**Krok 1: Utwórz lokalne pliki konfiguracyjne z szablonów.**
-W `strona-internetowa/tools/` uruchom:
+**Krok 1: Przygotowanie (Python + pliki konfiguracyjne).**
+Najpierw sprawdź po cichu, czy jest Python (będzie potrzebny do testów w kolejnych krokach):
+```
+python --version
+```
+- Jest → ✅ idź dalej.
+- Nie ma (albo „python nie jest rozpoznawany") → zainstaluj i poproś o ponowne otwarcie terminala:
+  - Windows: `winget install Python.Python.3.13`
+  - Mac: `brew install python`
+  Wyjaśnij prosto: „Python to darmowy program, którym uruchamiam narzędzia do Twojej strony. Nic poza tym nie instalujemy".
+
+Potem w `strona-internetowa/tools/` utwórz pliki na hasła z gotowych wzorów:
 ```
 cp dane-staging.example.txt dane-staging.txt
 cp ftp-staging.example.txt   ftp-staging.txt
@@ -117,11 +130,12 @@ python al_sync.py explore
 Sukces = widać listing katalogu domowego i katalog motywu na stagingu. Pochwal.
 
 **Krok 4: (Opcjonalnie) mała zmiana testowa na żywo.**
-Za zgodą użytkownika zaproponuj drobny, odwracalny test wyglądu (np. delikatna korekta koloru w `style.css`
-motywu lokalnego), wgraj samą tę zmianę i pokaż efekt:
+Za zgodą użytkownika zaproponuj drobny, odwracalny test wyglądu (np. delikatna korekta koloru w
+`assets/styles.css` motywu lokalnego), wgraj samą tę zmianę i pokaż efekt:
 ```
-python al_sync.py file style.css        # albo: css  /  push-all
+python al_sync.py css        # wgrywa assets/styles.css (glowny arkusz stylow)
 ```
+(`al_sync.py file <sciezka>` wgrywa pojedynczy inny plik, a `push-all` caly motyw.)
 Wyjaśnij: bezpiecznik skryptu wgrywa **tylko** ścieżki zawierające `staging`. Poproś o odświeżenie z pominięciem cache (`Ctrl/Cmd + Shift + R`).
 
 **Krok 5: Podsumowanie i codzienny rytm.**
